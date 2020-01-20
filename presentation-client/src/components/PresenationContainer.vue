@@ -46,19 +46,15 @@ export default class PresentationContainer extends Vue {
   public get slide(): number {
     return store.getters.slides.currentSlide;
   }
-
   public get subSlide(): number {
     return store.getters.slides.currentSub;
   }
-
   public get nextSlideRoute(): string {
     return store.getters.slides.nextSlideRoute;
   }
-
   public get previousSlideRoute(): string {
     return store.getters.slides.previousSlideRoute;
   }
-
   public get canNavigateForward(): boolean {
     return store.getters.slides.canNavigateForward;
   }
@@ -91,6 +87,7 @@ export default class PresentationContainer extends Vue {
     Object.assign(newRoute, this.$route);
     newRoute.path = newUrl;
     //this.transitionName = forward ? 'slide-left' : 'slide-right';
+    newRoute.name = undefined;
     return this.$router.push(newRoute);
   }
 }
@@ -99,31 +96,61 @@ export default class PresentationContainer extends Vue {
 <style scoped lang="scss">
 @import '../styles/bulma.customize.scss';
 
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+  .slide-container {
+    font-size: 28px;
+  }
+}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .slide-container {
+    font-size: 28px;
+  }
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .slide-container {
+    font-size: 32px;
+  }
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .slide-container {
+    font-size: 36px;
+  }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .slide-container {
+    font-size: 40px;
+  }
+}
 
 .presentation-container {
   position: relative;
   height: calc(100vh - #{$navbar-height});
-}
-
-.slide-container {
-  // display: grid;
-  // justify-items: stretch;
-  // align-items: stretch;
-  // height: 100%;
-  //display: inline;
-  font-size: 40px;
+  user-select: none;
 }
 
 .slide-nav-button-container {
-  position: absolute;
+  position: fixed;
   bottom: 35px;
   right: 35px;
 }
 
 .slide-slide-number {
-  position: absolute;
+  position: fixed;
   bottom: 35px;
   left: 35px;
+}
+
+.full-height-slide {
+  height: calc(100vh - #{$navbar-height});
 }
 
 $transition-duration: 1s;

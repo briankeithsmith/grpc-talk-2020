@@ -8,16 +8,16 @@ export interface SlideState {
     maxSlides: number;
 }
 const SubSlideLengths: number[] = [
-    0,
-    4,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
-    0,
+    0, // 1
+    4, // 2
+    9, // 3
+    0, // 4
+    0, // 5
+    0, // 6
+    0, // 7
+    0, // 8
+    0, // 9
+    0, // 10
 ];
 
 const slides = createModule({
@@ -83,11 +83,15 @@ const slides = createModule({
             if (nextSubSlide > context.state.maxSubSlides) {
                 return context.dispatch.navigateOne({forward: true});
             }
+            if (nextSubSlide < 0) {
+                return context.dispatch.navigateOne({forward: false, subSlideEnd: true});
+            }
+
             context.commit.SET_CurrentSubSlide(nextSubSlide);
             return context.getters.currentSlideRoute;
         },
 
-        navigateOne(ctx, payload: {forward: boolean}): false | string {
+        navigateOne(ctx, payload: {forward: boolean, subSlideEnd?: boolean}): false | string {
             const context = slidesActionContext(ctx);
             const currentSlide = context.state.currentSlide;
 
@@ -99,7 +103,7 @@ const slides = createModule({
             const nextSlide = currentSlide + (payload.forward ? 1 : -1);
 
             context.commit.SET_CurrentSlide(nextSlide);
-            context.commit.SET_CurrentSubSlide(0);
+            context.commit.SET_CurrentSubSlide(payload.subSlideEnd ? context.state.maxSubSlides : 0);
             return context.getters.currentSlideRoute;
         },
         navigateToSlide(ctx, payload: { slideNumber: number }): false | string {
@@ -113,8 +117,12 @@ const slides = createModule({
         },
         initializeOnSlide(ctx, payload: { slide: number, subSlide: number}) {
             const context = slidesActionContext(ctx);
-            context.commit.SET_CurrentSlide(payload.slide);
-            context.commit.SET_CurrentSubSlide(payload.subSlide);
+            if (context.state.currentSlide !== payload.slide) {
+                context.commit.SET_CurrentSlide(payload.slide);
+            }
+            if (context.state.currentSubSlide !== payload.subSlide) {
+                context.commit.SET_CurrentSubSlide(payload.subSlide);
+            }
         }
     },
 })

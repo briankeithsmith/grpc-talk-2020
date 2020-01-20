@@ -7,7 +7,7 @@
         </b-navbar-item>
       </template>
       <template slot="start">
-        <b-navbar-item tag="router-link" :to="{name: 'slides'}">Slides</b-navbar-item>
+        <b-navbar-item tag="router-link" :to="{name: 'slides', params: {'slide': 1, 'subSlide': 0}}">Slides</b-navbar-item>
         <b-navbar-item tag="router-link" :to="{name: 'demo'}">Demo</b-navbar-item>
         <b-navbar-dropdown label="Links">
           <b-navbar-item href="https://grpc.io/docs/quickstart/">Quick Start</b-navbar-item>

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter, { RouteConfig, Route } from 'vue-router'
 import Home from '../views/Home.vue'
 import { slides } from './slides'
+import { demo } from './demo'
 
 Vue.use(VueRouter)
 
@@ -16,6 +17,7 @@ const routes: RouteConfig[] = [
     redirect: '/'
   },
   ...slides,
+  ...demo,
 ]
 
 const router = new VueRouter({

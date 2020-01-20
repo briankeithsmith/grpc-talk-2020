@@ -1,7 +1,17 @@
 <template>
-    <div>
-        Slide 4
+    <section class="hero is-fullheight-with-navbar">
+    <div class="container">
+      <h1 class="title has-text-centered has-text-primary">Use Cases</h1>
+
+        <div class="content">
+            <ul>
+                <li>Microservices</li>
+                <li>Low Latency</li>
+                <li>Mobile</li>
+            </ul>
+        </div>
     </div>
+  </section>
 </template>
 
 <script lang="ts">

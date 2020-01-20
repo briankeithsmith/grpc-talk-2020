@@ -1,5 +1,5 @@
 <template>
-  <section class="hero is-fullheight">
+  <section class="hero is-fullheight-with-navbar">
     <div class="container">
       <h1 class="title has-text-centered has-text-primary">GRPC</h1>
       <h1 class="subtitle has-text-centered">
