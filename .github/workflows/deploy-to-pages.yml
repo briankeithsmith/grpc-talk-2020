@@ -12,7 +12,7 @@ jobs:
     # Install node to use aws cdk
     - uses: actions/setup-node@v1
       with:
-        node-version: '13.1.0'
+        node-version: '13.6.0'
     
     # Install node dependencies for site build
     - name: npm ci
