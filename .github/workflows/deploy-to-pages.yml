@@ -1,0 +1,42 @@
+name: Deploy Pages
+on: [push]
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2 # If you're using actions/checkout@v2 you must set persist-credentials to false in most cases for the deployment to work correctly.
+      with:
+        persist-credentials: false
+    
+    # Install node to use aws cdk
+    - uses: actions/setup-node@v1
+      with:
+        node-version: '13.1.0'
+    
+    # Install node dependencies for site build
+    - name: npm ci
+      working-directory: ./presentation-client
+      run: npm ci
+
+    - name: build
+      working-directory: ./presentation-client
+      run: npm run build
+
+    - name: Build and Deploy
+      uses: JamesIves/github-pages-deploy-action@releases/v3
+      with:
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        BRANCH: gh-pages # The branch the action should deploy to.
+        FOLDER: presentation-client/dist # The folder the action should deploy.
+    
+    # - name: Slack Notification
+    #   uses: 8398a7/action-slack@v2
+    #   with:
+    #     status: ${{ job.status }}
+    #     fields: repo,message,action,author
+    #   env:
+    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # required
+    #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }} # required
+    #     only_mention_fail: avaden
+    #   if: always()
