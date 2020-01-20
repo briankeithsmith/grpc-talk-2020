@@ -7,9 +7,9 @@ export const slides: RouteConfig[] = [{
     children: [
         {
             path: '',
-            redirect: '/slides/1/0'
-        },
+            redirect: '/slides/1/0',
 
+        },
         {
             path: '/slides/:slide/:subSlide',
             component: () => import(/* webpackChunkName: "slides" */ '../components/slides/Slide1.vue'),
@@ -18,7 +18,8 @@ export const slides: RouteConfig[] = [{
             path: '*',
             redirect: '/slides/1/0'
         },
-    ]
+    ],
+    name: 'slides'
 },];
 
 Vue.component(

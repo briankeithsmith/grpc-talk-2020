@@ -23,5 +23,6 @@ module.exports = {
                 '/slides/10/0',
             ],
         }));
-    }
+    },
+    publicPath: process.env.NODE_ENV === 'production' ? '/grpc-talk-2020/' : '/grpc-talk-2020/'
 }

@@ -9,6 +9,7 @@ const routes: RouteConfig[] = [
   {
     path: '/',
     component: Home,
+    name: 'home'
   },
   {
     path: '*',
@@ -18,7 +19,7 @@ const routes: RouteConfig[] = [
 ]
 
 const router = new VueRouter({
-  mode: 'history',
+  mode: 'hash',
   base: process.env.BASE_URL,
   routes
 })
