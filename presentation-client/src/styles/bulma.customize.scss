@@ -2,10 +2,16 @@
 @import "~bulma/sass/utilities/_all";
 
 // Set your colors
-$primary: #0CC1C8;
+$primary: #2DA6B0;
 $primary-invert: findColorInvert($primary);
-$info: rgb(228, 205, 106);
-$infor-invert: findColorInvert($info);
+$info: rgb(62, 133, 100);
+
+$info-invert: findColorInvert($info);
+
+$black: #2E2E2E;
+$white: #FFFFFF;
+$gray: #737373;
+
 
 $size-1: 3em;
 $size-2: 2.5em;

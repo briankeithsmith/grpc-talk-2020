@@ -21,31 +21,44 @@ export default class Slides extends Vue {
   }
   
   public mounted() {
-    store.dispatch.slides.initializeOnSlide({slideNumber: this.getSlideNumberFromRoute(this.$route)});
+    store.dispatch.slides.initializeOnSlide(this.getSlideNumberFromRoute(this.$route));
   }
 
   @Watch("$route", { immediate: true, deep: true })
   public watchRoute(to: Route, from: Route): void {
-    const newSlideNumber = this.getSlideNumberFromRoute(to);
-    store.dispatch.slides.initializeOnSlide({slideNumber: newSlideNumber});
+    const newPosition = this.getSlideNumberFromRoute(to);
+    store.dispatch.slides.initializeOnSlide(newPosition);
   }
 
-  private getSlideNumberFromRoute(route: Route): number {
-    const slideString = route.params["slideNumber"];
+  private getSlideNumberFromRoute(route: Route): {slide: number, subSlide: number} {
+    const slideString = route.params["slide"];
     if (!slideString) {
-      return  1;
+      return  {slide: 1, subSlide: 0};
     }
 
     const slideNumber = parseInt(slideString);
     if (!isFinite(slideNumber)) {
-      return 1;
+      return {slide: 1, subSlide: 0};
     }
 
     if (slideNumber < 1) {
-      return 1;
+      return {slide: 1, subSlide: 0};
     }
 
-    return slideNumber;
+    const subSlideString = route.params["subSlide"];
+    if (!subSlideString) {
+      return  {slide: slideNumber, subSlide: 0};
+    }
+
+    const subSlideNumber = parseInt(subSlideString);
+    if (!isFinite(subSlideNumber)) {
+      return {slide: slideNumber, subSlide: 0};
+    }
+
+    if (subSlideNumber < 0) {
+      return {slide: slideNumber, subSlide: 0};
+    }
+    return { slide: slideNumber, subSlide: subSlideNumber};
   }
 }
 </script>

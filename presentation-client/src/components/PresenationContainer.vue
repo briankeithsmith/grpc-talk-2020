@@ -1,10 +1,14 @@
 <template>
   <div class="presentation-container">
-    <div class="slide-container is-fullheight">
-      <component :is="`slide-${slideNumber}`"></component>
+    
+    <div class="slide-container" v-on:click="slideClicked($event)">
+      <transition :name="transitionName">
+        <component :is="`slide-${slide}`" 
+          :subSlide="subSlide"></component>
+      </transition>
     </div>
     
-    <div v-if="showSlideNumber" class="slide-slide-number"> {{ slideNumber }}</div>
+    <div v-if="showSlideNumber" class="slide-slide-number"> {{ slide }}</div>
 
     <div v-if="showControls" class="slide-nav-button-container">
       <b-button tag="a" :href="previousSlideRoute" @click.prevent="navigateClicked(false)" :disabled="!canNavigateBackward" type="is-link">
@@ -31,14 +35,20 @@ library.add(faAngleLeft);
 @Component({
   components: {
     FontAwesomeIcon
-  },
+  }
 })
 export default class PresentationContainer extends Vue {
   @Prop({ default: true, type: Boolean }) public showSlideNumber!: number;
-  @Prop({ default: true, type: Boolean}) public showControls!: boolean;
+  @Prop({ default: true, type: Boolean }) public showControls!: boolean;
 
-  public get slideNumber(): number {
+  public transitionName: string = "fade";
+
+  public get slide(): number {
     return store.getters.slides.currentSlide;
+  }
+
+  public get subSlide(): number {
+    return store.getters.slides.currentSub;
   }
 
   public get nextSlideRoute(): string {
@@ -56,34 +66,52 @@ export default class PresentationContainer extends Vue {
     return store.getters.slides.canNavigateBackwards;
   }
 
-  public async navigateClicked(forward: boolean) {
-    const newUrl = await store.dispatch.slides.navigateOne({forward,});
-    if (!newUrl) {
+  public async slideClicked(event: MouseEvent) {
+    const elementX = event.x;
+    if (event.srcElement === null) {
       return;
+    }
+    const elementWidth = (event.srcElement as HTMLElement).clientWidth;
+    const clickRatio = elementX / elementWidth;
+    const newUrl = await store.dispatch.slides.navigateSubSlide({forward: clickRatio >= .5});
+    this.navigateToNewPath(newUrl);
+  }
+
+  public async navigateClicked(forward: boolean) {
+    const newUrl = await store.dispatch.slides.navigateOne({ forward });
+    this.navigateToNewPath(newUrl);
+  }
+
+  private navigateToNewPath(newUrl: string | false): Promise<Route> {
+    if (!newUrl) {
+      return Promise.resolve(this.$route);
     }
 
     const newRoute: any = {};
     Object.assign(newRoute, this.$route);
     newRoute.path = newUrl;
+    //this.transitionName = forward ? 'slide-left' : 'slide-right';
     return this.$router.push(newRoute);
   }
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+@import '../styles/bulma.customize.scss';
+
+
 .presentation-container {
   position: relative;
-  width: 100vw;
-  height: 100vh;
+  height: calc(100vh - #{$navbar-height});
 }
 
 .slide-container {
-  display: grid; 
-  justify-items: stretch; 
+  // display: grid;
+  // justify-items: stretch;
   // align-items: stretch;
-  height: 100%; 
-  font-size: 34px;
+  // height: 100%;
+  //display: inline;
+  font-size: 40px;
 }
 
 .slide-nav-button-container {
@@ -96,5 +124,46 @@ export default class PresentationContainer extends Vue {
   position: absolute;
   bottom: 35px;
   left: 35px;
+}
+
+$transition-duration: 1s;
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity $transition-duration;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+.fade-enter,.fade-leave-to {
+  opacity: 0;
+}
+
+.slide-left-enter-active, .slide-left-leave-active {
+  transition: transform $transition-duration;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+.slide-left-enter {
+  transform: translateX(100%);
+}
+.slide-left-leave-to {
+  transform: translateX(-100%);
+}
+
+.slide-right-enter-active, .slide-right-leave-active {
+  transition: transform $transition-duration;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+.slide-right-enter {
+  transform: translateX(-100%);
+}
+.slide-right-leave-to {
+  transform: translateX(100%);
 }
 </style>
