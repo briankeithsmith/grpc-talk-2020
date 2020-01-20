@@ -3,14 +3,20 @@ const path = require('path');
 
 
 module.exports = {
+    pluginOptions: {
+        webpackBundleAnalyzer: {
+            openAnalyzer: false,
+            analyzerMode: 'disabled'
+        }
+    },
     configureWebpack: (config) => {
         config.plugins.push(new PrerenderSPAPlugin({
             // Required - The path to the webpack-outputted app to prerender.
             staticDir: path.join(__dirname, 'dist'),
             // Required - Routes to render.
             routes: [
-                '/', 
-                '/slides', 
+                '/',
+                '/slides',
                 '/slides/1/0',
                 '/slides/2/0',
                 '/slides/3/0',
