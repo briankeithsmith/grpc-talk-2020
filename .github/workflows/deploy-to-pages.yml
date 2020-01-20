@@ -17,7 +17,7 @@ jobs:
     # Install node dependencies for site build
     - name: npm ci
       working-directory: ./presentation-client
-      run: npm install
+      run: npm ci
 
     - name: build
       working-directory: ./presentation-client
