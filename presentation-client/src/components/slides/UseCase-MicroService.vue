@@ -9,7 +9,8 @@
       <section>
         <div class="columns is-8">
           <div class="column is-4" @click.stop>
-              <b-slider :min="0" :max="21" ticks :tooltip="false" v-model="sliderValue" @change="sliderChanged"></b-slider>
+              <h4 class="has-text-centered">Timeline</h4>
+              <b-slider :min="0" :max="22" ticks :tooltip="false" v-model="sliderValue" @change="sliderChanged"></b-slider>
               <p>{{ stepSummary }}</p>
           </div>
           <div class="column">
@@ -35,22 +36,22 @@ const stepDefinitions = [
   `Recomendations process responses and returns to search`,
   `Search calls to comments based on recomendations`,
   `Search aggergrates all results and returns to client`,
-  `Client makes call to search service with 1.5 second deadline`,
-  `9`,
-  `10`,
-  `11`,
-  `12`,
-  `13`,
-  `14`,
-  `15`,
-  `16`,
-  `17`,
-  `18`,
-  `19`,
-  `20`,
-  `21`,
-  `22`,
-  `23`,
+  `Client makes call to search service to get available listings with 1.5 (s) deadline`,
+  `Search service calls to Authentication service with 1.5 (s) deadline`,
+  `Authentication service returns to the search service in 0.1 (s). Search service has 1.4 (s) left to fufill the request`,
+  `Search service makes 2 asychronus calls to to the Adds and Recomendations service with a 1.4 (s) deadline`,
+  `Recomendation takes 0.2 (s) to process the request 0.3 (s) has elapsed since user made request 1.2 (s) remaining.`,
+  `Makes 2 asychronous calls to Reservations and Users service's with 1.2 (s) deadline`,
+  `After 0.3 (s) Reservations service responds, recomentations service still waiting for response from Users service`,
+  `After 0.1 (s) Users service responds for a total call time of 0.4 (s)`,
+  `Recomendations service responds to serarch service with a batch of recomendations total time elapsed is not 0.7 (s)`,
+  `Search service calls to comments service with 0.6 (s) deadline`,
+  `Comments service responds in 0.3 (s) there are now 0.5 (s) left in the users original deadline`,
+  `Since there are 0.5 (s) remaining serach service can now request another batch of recomentaions with a 0.5 (s) deadline`,
+  `Recomendations service process request and makes calls to Reservations and users service with 0.5 (s) deadline`,
+  `After 0.1 (s) more the adds service responds with the adds to be included leaving 0.4 (s) left in the original deadline`,
+  `Search service decides to cancel recomendations request and return early to user, cancelation is propogated to users and reservations`,
+  `Search service responds in 1.2 (s)`,
 ];
 
 @Component({
