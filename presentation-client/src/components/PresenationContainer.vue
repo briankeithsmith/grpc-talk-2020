@@ -43,8 +43,8 @@ export default class PresentationContainer extends Vue {
 
   public transitionName: string = "fade";
 
-  public get slide(): number {
-    return store.getters.slides.currentSlide;
+  public get slide() {
+    return store.getters.slides.currentSlide.name;
   }
   public get subSlide(): number {
     return store.getters.slides.currentSub;

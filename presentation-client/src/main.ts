@@ -11,7 +11,7 @@ Vue.config.productionTip = false
 import '@/styles/_index.scss';
 
 new Vue({
-  router,
   store: store.original,
+  router,
   render: h => h(App)
 }).$mount('#app')

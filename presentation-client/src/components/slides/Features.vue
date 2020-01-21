@@ -6,29 +6,29 @@
       <ul>
         <li :class="{'is-active': isTab(1)}" @click.stop>
           <router-link
-            :to="{ name: 'slides', params: {'silde': 3, subSlide: tabEnd(1)}}"
+            :to="{ name: 'slides', params: {'silde': currentSlideNumber, subSlide: tabEnd(1)}}"
           >Code Generation</router-link>
         </li>
         <li :class="{'is-active': isTab(2)}" @click.stop>
-          <router-link :to="{ name: 'slides', params: {'silde': 3, subSlide: tabEnd(2)}}">Streaming</router-link>
+          <router-link :to="{ name: 'slides', params: {'silde': currentSlideNumber, subSlide: tabEnd(2)}}">Streaming</router-link>
         </li>
         <li :class="{'is-active': isTab(3)}" @click.stop>
           <router-link
-            :to="{ name: 'slides', params: {'silde': 3, subSlide: tabEnd(3)}}"
+            :to="{ name: 'slides', params: {'silde': currentSlideNumber, subSlide: tabEnd(3)}}"
           >Load Balancing</router-link>
         </li>
         <li :class="{'is-active': isTab(4)}" @click.stop>
-          <router-link :to="{ name: 'slides', params: {'silde': 3, subSlide: tabEnd(4)}}">...</router-link>
+          <router-link :to="{ name: 'slides', params: {'silde': currentSlideNumber, subSlide: tabEnd(4)}}">...</router-link>
         </li>
       </ul>
     </div>
 
     <section>
       <transition name="fade" mode="out-in">
-        <div v-if="isTab(1)" key="code-generation">
+        <div v-if="isTab(1)" key="code-generation" class="container">
           <a
             v-if="subSlide >= tabStart(1)"
-            class="is-size-1"
+            class="is-size-4"
             href="https://github.com/protocolbuffers/protobuf/releases"
             target="_blank"
           >Protoc (.proto)</a>
@@ -47,43 +47,78 @@
             <div class="column is-narrow">
               <ol>
                 <li v-if="subSlide >= tabStart(2, 1)">
-                  <h6 :class="{'has-text-primary': subSlide == tabStart(2,1)}">Unary</h6>
+                  <span class="is-size-5" :class="{'has-text-primary': subSlide == tabStart(2,1)}">Unary</span>
                 </li>
                 <li v-if="subSlide >= tabStart(2, 2)">
-                  <h6 :class="{'has-text-primary': subSlide == tabStart(2,2)}">Server Streaming</h6>
+                  <span class="is-size-5" :class="{'has-text-primary': subSlide == tabStart(2,2)}">Server Streaming</span>
                 </li>
                 <li v-if="subSlide >= tabStart(2, 3)">
-                  <h6 :class="{'has-text-primary': subSlide == tabStart(2,3)}">Client Streaming</h6>
+                  <span class="is-size-5" :class="{'has-text-primary': subSlide == tabStart(2,3)}">Client Streaming</span>
                 </li>
                 <li v-if="subSlide >= tabStart(2, 4)">
-                  <h6
+                  <span class="is-size-5"
                     :class="{'has-text-primary': subSlide == tabStart(2,4)}"
-                  >Bidirectional Streaming</h6>
+                  >Bidirectional Streaming</span>
                 </li>
               </ol>
             </div>
             <div class="column is-hidden-mobile is-hidden-tablet-only">
-              <highlight-code :code="sourceCode" lang="protobuf"></highlight-code>
+              <highlight-code v-if="subSlide >= tabStart(2, 1)" :code="sourceCode" lang="protobuf"></highlight-code>
             </div>
           </div>
         </div>
 
         <div v-if="isTab(3)" key="load-balancing">
-          <div>protoc</div>
+          <section>
+            <div class="container has-text-centered">
+              <a
+                class="is-size-4 has-text-link"
+                href="https://github.com/grpc/grpc/blob/master/doc/load-balancing.md"
+                target="_blank"
+              >Documentation</a>
+            </div>
+          </section>
+          <section>
+            <div class="columns">
+              <div class="column">
+                <div class="content">
+                  <ul>
+                    <li v-if="subSlide >= tabStart(3,1)">Proxy based</li>
+                    <li v-if="subSlide >= tabStart(3,2)">Thick Client</li>
+                    <li
+                      v-if="subSlide >= tabStart(3,3)"
+                      class="has-text-weight-bold"
+                    >Lookaside / External</li>
+                  </ul>
+                </div>
+              </div>
+              <div class="column">
+                <img v-if="subSlide === tabStart(3,3)" src="@/assets/slides/load-balancing.png" />
+              </div>
+            </div>
+          </section>
         </div>
 
         <div v-if="isTab(4)" key="...">
-          <div>Deadlines</div>
-          <div>Cancelation propogation</div>
-          <div>Request compression</div>
-          <div>TLS / SSL</div>
-          <div>Synchronous &amp; Asynchronous</div>
-          <div>
-            Runtime discoverability -
-            <a
-              href="https://github.com/fullstorydev/grpcurl"
-              target="_blank"
-            >grpCurl</a>
+          <div class="container">
+            <div class="content">
+              <ul>
+                <li v-if="subSlide >= tabStart(4,0)">Deadlines</li>
+                <li v-if="subSlide >= tabStart(4,1)">Cancelation propogation</li>
+                <li v-if="subSlide >= tabStart(4,2)">Request compression</li>
+                <li v-if="subSlide >= tabStart(4,3)">TLS / SSL</li>
+                <li v-if="subSlide >= tabStart(4,4)">Synchronous &amp; Asynchronous</li>
+                <li v-if="subSlide >= tabStart(4,5)">Observability</li>
+                <li v-if="subSlide >= tabStart(4,6)">Mature</li>
+                <li v-if="subSlide >= tabStart(4,7)">
+                  Runtime discoverability -
+                  <a
+                    href="https://github.com/fullstorydev/grpcurl"
+                    target="_blank"
+                  >grpCurl</a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
       </transition>
@@ -93,19 +128,21 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
+import store from '@/store';
 
-import VueHighlightJS from 'vue-highlight.js';
+import VueHighlightJS from "vue-highlight.js";
 // @ts-ignore
-import protobuf from 'highlight.js/lib/languages/protobuf';
-import 'highlight.js/styles/atom-one-dark.css';
+import protobuf from "highlight.js/lib/languages/protobuf";
+import "highlight.js/styles/atom-one-dark.css";
 
 Vue.use(VueHighlightJS, {
-	languages: {
-		protobuf,
-	}
+  languages: {
+    protobuf
+  }
 });
 
-const tabEndRanges = [4, 9, 99, 99];
+
+const tabEndRanges = [4, 9, 13, 99];
 const unaryCode = `
 rpc SayHello(HelloRequest) 
     returns (HelloResponse) { }`;
@@ -120,7 +157,7 @@ rpc BidiHello(stream HelloRequest)
     returns (stream HelloResponse) { }`;
 
 @Component
-export default class Slide3 extends Vue {
+export default class FeaturesSlide extends Vue {
   @Prop({ required: false, type: Number, default: 0 }) public subSlide!: number;
 
   public isTab(tabNumber: number) {
@@ -128,6 +165,10 @@ export default class Slide3 extends Vue {
       this.subSlide >= this.tabStart(tabNumber) &&
       this.subSlide <= this.tabEnd(tabNumber)
     );
+  }
+
+  public get currentSlideNumber() {
+      return store.getters.slides.currentSlide;
   }
 
   public tabEnd(tabNumber: number) {

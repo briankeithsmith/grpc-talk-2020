@@ -1,14 +1,14 @@
 <template>
-    <slide-1></slide-1>
+    <title-slide></title-slide>
 </template>
 
 <script>
-import Slide1 from '@/components/slides/Slide1';
+import TitleSlide from '@/components/slides/Title';
 
 export default {
   name: 'home',
   components: {
-      Slide1,
+      TitleSlide,
   }
 }
 </script>

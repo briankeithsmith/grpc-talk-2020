@@ -1,5 +1,5 @@
 <template>
-  <section class="hero is-fullheight-with-navbar">
+  <section class="full-height-slide">
     <div class="container">
       <h1 class="title has-text-centered has-text-primary">GRPC</h1>
       <h1 class="subtitle has-text-centered">
@@ -24,12 +24,12 @@
             </p>
           </div>-->
           <div class="tile is-child box" v-if="subSlide >= 1">
-            <p class="title is-size-2" :class="{'has-text-primary': subSlide === 1}">Contract first</p>
+            <p class="title is-size-4" :class="{'has-text-primary': subSlide === 1}">Contract first</p>
             <p>Protocol buffers as an Interface Definition Language (IDL)</p>
           </div>
           <div class="tile is-child box" v-if="subSlide >= 2">
             <p
-              class="title is-size-2"
+              class="title is-size-4"
               :class="{'has-text-primary': subSlide === 2}"
             >High Performance</p>
             <div class="content">
@@ -43,13 +43,13 @@
         </div>
         <div class="tile is-6 is-vertical is-parent">
           <div class="tile is-child box" v-if="subSlide >= 3">
-            <p class="title is-size-2" :class="{'has-text-primary': subSlide === 3}">Feature Rich</p>
+            <p class="title is-size-4" :class="{'has-text-primary': subSlide === 3}">Feature Rich</p>
             <p>
                 Best in class tool chain and supporting libraries
             </p>
           </div>
           <div class="tile is-child box" v-if="subSlide >= 4">
-            <p class="title is-size-2" :class="{'has-text-primary': subSlide === 4}">Run anywhere</p>
+            <p class="title is-size-4" :class="{'has-text-primary': subSlide === 4}">Run anywhere</p>
             <p>
                 Official support for most major languages and architectures
             </p>
@@ -63,8 +63,9 @@
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
 
+
 @Component
-export default class Slide2 extends Vue {
+export default class GRPCSlide extends Vue {
   @Prop({ required: false, type: Number, default: 0 }) public subSlide!: number;
 }
 </script>

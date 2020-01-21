@@ -39,6 +39,8 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faEnvelope, faGlobe } from "@fortawesome/free-solid-svg-icons";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 
+
+
 library.add(faGithub);
 library.add(faGlobe);
 library.add(faEnvelope);
@@ -48,7 +50,7 @@ library.add(faEnvelope);
     FontAwesomeIcon
   }
 })
-export default class Slide1 extends Vue {
+export default class TitleSlide extends Vue {
   @Prop({required: false, type: Number, default: 0}) public subSlide!: number;
 }
 </script>

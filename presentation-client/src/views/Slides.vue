@@ -30,35 +30,27 @@ export default class Slides extends Vue {
     store.dispatch.slides.initializeOnSlide(newPosition);
   }
 
-  private getSlideNumberFromRoute(route: Route): {slide: number, subSlide: number} {
-    const slideString = route.params["slide"];
-    if (!slideString) {
-      return  {slide: 1, subSlide: 0};
-    }
-
-    const slideNumber = parseInt(slideString);
-    if (!isFinite(slideNumber)) {
-      return {slide: 1, subSlide: 0};
-    }
-
-    if (slideNumber < 1) {
-      return {slide: 1, subSlide: 0};
-    }
-
+  private getSlideNumberFromRoute(route: Route): {slide: string, subSlide: number} {
+    const slide = route.params["slide"];
     const subSlideString = route.params["subSlide"];
+    if (!slide) {
+      return  {slide, subSlide: 0};
+    }
+
+    
     if (!subSlideString) {
-      return  {slide: slideNumber, subSlide: 0};
+      return  {slide, subSlide: 0};
     }
 
     const subSlideNumber = parseInt(subSlideString);
     if (!isFinite(subSlideNumber)) {
-      return {slide: slideNumber, subSlide: 0};
+      return {slide, subSlide: 0};
     }
 
     if (subSlideNumber < 0) {
-      return {slide: slideNumber, subSlide: 0};
+      return {slide, subSlide: 0};
     }
-    return { slide: slideNumber, subSlide: subSlideNumber};
+    return { slide, subSlide: subSlideNumber};
   }
 }
 </script>

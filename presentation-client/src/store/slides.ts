@@ -1,33 +1,27 @@
 import { createModule } from "direct-vuex"
 import { moduleActionContext } from "./index"
+import { AllSlides, TitleConfig } from '@/components/slides/SlideConfigs';
 
 export interface SlideState {
-    currentSlide: number;
+    currentSlide: SlideConfig;
     currentSubSlide: number;
-    maxSubSlides: number;
+    currentSlideOrder: number;
     maxSlides: number;
 }
-const SubSlideLengths: number[] = [
-    0, // 1
-    4, // 2
-    9, // 3
-    0, // 4
-    0, // 5
-    0, // 6
-    0, // 7
-    0, // 8
-    0, // 9
-    0, // 10
-];
+
+export interface SlideConfig {
+    maxSubSlides: number;
+    name: string;
+}
 
 const slides = createModule({
     namespaced: true,
     state: (): SlideState => {
         return {
-            currentSlide: 1,
+            currentSlide: TitleConfig,
             currentSubSlide: 0,
-            maxSubSlides: 0,
-            maxSlides: 10,
+            currentSlideOrder: 0,
+            maxSlides: AllSlides.length - 1,
         }
     },
     getters: {
@@ -38,33 +32,45 @@ const slides = createModule({
             return state.currentSubSlide;
         },
         canNavigateForward(state) {
-            return state.currentSlide < state.maxSlides;
+            return state.currentSlideOrder < state.maxSlides;
         },
         canNavigateBackwards(state) {
-            return state.currentSlide > 1;
+            return state.currentSlideOrder > 0;
         },
         currentSlideRoute(state) {
-            return `/slides/${state.currentSlide.toFixed(0)}/${state.currentSubSlide.toFixed(0)}`;
+            return `/slides/${state.currentSlide.name}/${state.currentSubSlide.toFixed(0)}`;
         },
         nextSlideRoute(state) {
-            if (state.currentSlide >= state.maxSlides) {
-                return `/slides/${state.maxSlides.toFixed(0)}}/0`;
+            if (state.currentSlideOrder >= state.maxSlides) {
+                return `/slides/${AllSlides[AllSlides.length - 1].name}/${AllSlides[AllSlides.length - 1].maxSubSlides}`;
             }
 
-            return `/slides/${(state.currentSlide + 1).toFixed(0)}/0`;
+            return `/slides/${AllSlides[state.currentSlideOrder + 1].name}/0`;
         },
         previousSlideRoute(state) {
-            if (state.currentSlide <= 1) {
-                return '/slides/1/0';
+            if (state.currentSlideOrder <= 1) {
+                return `/slides/${AllSlides[0].name}/0`;
             }
 
-            return `/slides/${(state.currentSlide - 1).toFixed(0)}/0`;
-        }
+            return `/slides/${AllSlides[state.currentSlideOrder - 1].name}/0`;
+        },
+        slideOrder(state) {
+            return (name: string) => {
+                return AllSlides.findIndex(x => x.name === name);
+            }
+        },
+        slideConfig(state) {
+            return (name: string) => {
+                return AllSlides.find(x => x.name === name);
+            }
+        },
     },
     mutations: {
-        SET_CurrentSlide(state, slideNumber: number) {
-            state.currentSlide = slideNumber;
-            state.maxSubSlides = SubSlideLengths[slideNumber - 1];
+        SET_CurrentSlide(state, slide: SlideConfig) {
+            state.currentSlide = slide;
+        },
+        SET_CurrentSlideOrder(state, slideOrder: number) {
+            state.currentSlideOrder = slideOrder;
         },
         SET_CurrentSubSlide(state, subSlide: number) {
             state.currentSubSlide = subSlide;
@@ -80,7 +86,7 @@ const slides = createModule({
             }
 
             let nextSubSlide = currentSubSlide + (payload.forward ? 1 : -1);
-            if (nextSubSlide > context.state.maxSubSlides) {
+            if (nextSubSlide > context.state.currentSlide.maxSubSlides) {
                 return context.dispatch.navigateOne({forward: true});
             }
             if (nextSubSlide < 0) {
@@ -93,33 +99,40 @@ const slides = createModule({
 
         navigateOne(ctx, payload: {forward: boolean, subSlideEnd?: boolean}): false | string {
             const context = slidesActionContext(ctx);
-            const currentSlide = context.state.currentSlide;
+            const currentSlide = context.state.currentSlideOrder;
 
             if (payload.forward && !context.getters.canNavigateForward) {
                 return false;
             } else if (!payload.forward && !context.getters.canNavigateBackwards) {
                 return false;
             }
-            const nextSlide = currentSlide + (payload.forward ? 1 : -1);
-
-            context.commit.SET_CurrentSlide(nextSlide);
-            context.commit.SET_CurrentSubSlide(payload.subSlideEnd ? context.state.maxSubSlides : 0);
-            return context.getters.currentSlideRoute;
-        },
-        navigateToSlide(ctx, payload: { slideNumber: number }): false | string {
-            const context = slidesActionContext(ctx);
-            if (payload.slideNumber < 0 || payload.slideNumber > context.state.maxSlides) {
-                return false;
+            const nextSlideIndex = currentSlide + (payload.forward ? 1 : -1);
+            let slideConfig: SlideConfig;
+            if (nextSlideIndex < 0) {
+                slideConfig = AllSlides[0];
+            } else if (nextSlideIndex >= AllSlides.length) {
+                slideConfig = AllSlides[AllSlides.length - 1];
+            } else {
+                slideConfig = AllSlides[nextSlideIndex];
             }
 
-            context.commit.SET_CurrentSlide(payload.slideNumber);
+            context.commit.SET_CurrentSlide(slideConfig);
+            const slideOrder = context.getters.slideOrder(slideConfig.name);
+            context.commit.SET_CurrentSlideOrder(slideOrder);
+            context.commit.SET_CurrentSubSlide(payload.subSlideEnd ? slideConfig.maxSubSlides : 0);
             return context.getters.currentSlideRoute;
         },
-        initializeOnSlide(ctx, payload: { slide: number, subSlide: number}) {
+        initializeOnSlide(ctx, payload: { slide: string, subSlide: number}) {
             const context = slidesActionContext(ctx);
-            if (context.state.currentSlide !== payload.slide) {
-                context.commit.SET_CurrentSlide(payload.slide);
+            let slideConfig = context.getters.slideConfig(payload.slide);
+            if (!slideConfig) {
+                slideConfig = AllSlides[0];
             }
+            if (context.state.currentSlide.name !== payload.slide) {
+                context.commit.SET_CurrentSlide(slideConfig);
+            }
+            let slideOrder = context.getters.slideOrder(payload.slide);
+            context.commit.SET_CurrentSlideOrder(slideOrder);
             if (context.state.currentSubSlide !== payload.subSlide) {
                 context.commit.SET_CurrentSubSlide(payload.subSlide);
             }
@@ -127,5 +140,5 @@ const slides = createModule({
     },
 })
 
-export default slides
-export const slidesActionContext = (context: any) => moduleActionContext(context, slides)
+export default slides;
+export const slidesActionContext = (context: any) => moduleActionContext(context, slides);
