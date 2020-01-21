@@ -30,13 +30,13 @@ jobs:
         BRANCH: gh-pages # The branch the action should deploy to.
         FOLDER: presentation-client/dist # The folder the action should deploy.
     
-    # - name: Slack Notification
-    #   uses: 8398a7/action-slack@v2
-    #   with:
-    #     status: ${{ job.status }}
-    #     fields: repo,message,action,author
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # required
-    #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }} # required
-    #     only_mention_fail: avaden
-    #   if: always()
+    - name: Slack Notification
+      uses: 8398a7/action-slack@v2
+      with:
+        status: ${{ job.status }}
+        fields: repo,message,action,author
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # required
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }} # required
+        only_mention_fail: avaden
+      if: always()
