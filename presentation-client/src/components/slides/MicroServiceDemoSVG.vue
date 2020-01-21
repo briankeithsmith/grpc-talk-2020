@@ -152,7 +152,7 @@
       <text class="big" x="614.997" y="430.876" v-if="subSlide === 2">2</text>
       <text class="big" y="625.915" x="487.283" v-if="subSlide === 3">3</text>
       <text class="big" y="725.355" x="235.990" v-if="subSlide === 3">3</text>
-      <text class="big" y="417.695" x="350.108" v-if="subSlide === 4">4</text>
+      <!-- <text class="big" y="417.695" x="350.108" v-if="subSlide === 4">4</text> -->
       <text class="big" y="507.059" x="416.579" v-if="subSlide === 4">4</text>
       <text class="big" y="417.695" x="350.108" v-if="subSlide === 5">5</text>
       <text class="big" y="212.678" x="574.512" v-if="subSlide === 6">6</text>

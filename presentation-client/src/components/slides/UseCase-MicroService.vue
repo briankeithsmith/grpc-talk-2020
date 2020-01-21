@@ -7,8 +7,8 @@
     <section>
     </section>
       <section>
-        <div class="columns is-vcentered">
-          <div class="column is-3" @click.stop>
+        <div class="columns is-8">
+          <div class="column is-4" @click.stop>
               <b-slider :min="0" :max="21" ticks :tooltip="false" v-model="sliderValue" @change="sliderChanged"></b-slider>
               <p>{{ stepSummary }}</p>
           </div>
@@ -28,14 +28,14 @@ import store from '@/store';
 import { Route } from 'vue-router';
 
 const stepDefinitions = [
-  `1`,
-  `2`,
-  `3`,
-  `4`,
-  `5`,
-  `6`,
-  `7`,
-  `8`,
+  `Micro service booking setup example call to search service to get bookings for a given area`,
+  `Authenticate user`,
+  `Simulataneously call to recomendations and adds service`,
+  `Recomendation service make simultaneous calls to users and reservations services`,
+  `Recomendations process responses and returns to search`,
+  `Search calls to comments based on recomendations`,
+  `Search aggergrates all results and returns to client`,
+  `Client makes call to search service with 1.5 second deadline`,
   `9`,
   `10`,
   `11`,
@@ -49,7 +49,8 @@ const stepDefinitions = [
   `19`,
   `20`,
   `21`,
-  `22`
+  `22`,
+  `23`,
 ];
 
 @Component({
