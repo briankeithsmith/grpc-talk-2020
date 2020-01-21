@@ -83,7 +83,7 @@
               <div class="column">
                 <div class="content">
                   <ul>
-                    <li v-if="subSlide >= tabStart(3,1)">Proxy based</li>
+                    <li v-if="subSlide >= tabStart(3,1)">Proxy Based</li>
                     <li v-if="subSlide >= tabStart(3,2)">Thick Client</li>
                     <li
                       v-if="subSlide >= tabStart(3,3)"
@@ -104,12 +104,12 @@
             <div class="content">
               <ul>
                 <li v-if="subSlide >= tabStart(4,0)">Deadlines</li>
-                <li v-if="subSlide >= tabStart(4,1)">Cancelation propogation</li>
-                <li v-if="subSlide >= tabStart(4,2)">Request compression</li>
+                <li v-if="subSlide >= tabStart(4,1)">Cancelation Propogation</li>
+                <li v-if="subSlide >= tabStart(4,2)">Request Compression</li>
                 <li v-if="subSlide >= tabStart(4,3)">TLS / SSL</li>
                 <li v-if="subSlide >= tabStart(4,4)">Synchronous &amp; Asynchronous</li>
                 <li v-if="subSlide >= tabStart(4,5)">Observability</li>
-                <li v-if="subSlide >= tabStart(4,6)">Mature</li>
+                <li v-if="subSlide >= tabStart(4,6)">Mature Ecosystem</li>
                 <li v-if="subSlide >= tabStart(4,7)">
                   Runtime discoverability -
                   <a

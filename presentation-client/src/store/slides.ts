@@ -77,15 +77,28 @@ const slides = createModule({
         }
     },
     actions: {
-        async navigateSubSlide(ctx, payload: {forward: boolean}): Promise<false | string> {
+        async navigateSubSlide(ctx, payload: {forward?: boolean, value?: number}): Promise<false | string> {
+            if (payload.forward !== undefined && payload.value !== undefined){
+                return false;
+            }
             const context = slidesActionContext(ctx);
             const currentSubSlide = context.state.currentSubSlide;
             
-            if (!payload.forward && context.state.currentSubSlide >= 0 && !context.getters.canNavigateBackwards) {
+            if (payload.forward !== undefined) {
+                if (!payload.forward && context.state.currentSubSlide >= 0 && !context.getters.canNavigateBackwards) {
+                    return false;
+                }
+            }
+
+            let nextSubSlide = 0;
+            if (payload.forward !== undefined) {
+                nextSubSlide = currentSubSlide + (payload.forward ? 1 : -1);
+            } else if (payload.value !== undefined) {
+                nextSubSlide = payload.value;
+            } else {
                 return false;
             }
 
-            let nextSubSlide = currentSubSlide + (payload.forward ? 1 : -1);
             if (nextSubSlide > context.state.currentSlide.maxSubSlides) {
                 return context.dispatch.navigateOne({forward: true});
             }
@@ -93,6 +106,9 @@ const slides = createModule({
                 return context.dispatch.navigateOne({forward: false, subSlideEnd: true});
             }
 
+            if (context.state.currentSubSlide === nextSubSlide) {
+                return false;
+            }
             context.commit.SET_CurrentSubSlide(nextSubSlide);
             return context.getters.currentSlideRoute;
         },

@@ -17,7 +17,7 @@ export const slides: RouteConfig[] = [{
         },
         {
             path: '*',
-            component: () => import(/* webpackChunkName: "slide-not-found */ '../components/slides/NotFound.vue'),
+            component: () => import(/* webpackChunkName: "slide-not-found" */ '../components/slides/NotFound.vue'),
         },
     ],
 },];

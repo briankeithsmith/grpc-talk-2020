@@ -16,8 +16,8 @@ export const FeaturesConfig: SlideConfig = {
 };
 
 export const UseCasesConfig: SlideConfig = {
-  maxSubSlides: 4,
-  name: 'UseCases'
+  maxSubSlides: 22,
+  name: 'UseCase-MicroService'
 };
 
 export const AllSlides: ReadonlyArray<SlideConfig> = [
