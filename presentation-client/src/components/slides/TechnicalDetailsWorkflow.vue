@@ -12,6 +12,7 @@
                 <li v-if="subSlide >= 1">Create .proto files defining messges and services</li>
                 <li v-if="subSlide >= 2">Use protoc to generate source client and server source code stubs</li>
                 <li v-if="subSlide >= 3">Implement server stubs</li>
+                <li v-if="subSlide >= 4">Profit</li>
             </ol>
         </div>
       </section>
@@ -23,7 +24,7 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 
 @Component
-export default class TechnicalDetails extends Vue {
+export default class TechnicalDetailsWorkflow extends Vue {
     @Prop({ required: false, type: Number, default: 0 }) public subSlide!: number;
 }
 </script>

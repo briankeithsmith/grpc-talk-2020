@@ -56,10 +56,10 @@ export default class PresentationContainer extends VueClass {
 
   public get slide() {
     const name = store.getters.slides.currentSlide.name;
-    const component = (Vue as any).options.components['slide-'+name];
-    if (!component) {
-      this.$router.push({ name: 'slide-not-found' })
-    }
+    // const component = (Vue as any).options.components['slide-'+name];
+    // if (!component) {
+    //   this.$router.push({ name: 'slide-not-found' })
+    // }
     return name;
   }
   public get subSlide(): number {
