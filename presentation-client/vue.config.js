@@ -2,6 +2,54 @@ const PrerenderSPAPlugin = require('prerender-spa-plugin');
 const path = require('path');
 
 
+const AllSlides = [
+    {
+        maxSubSlides: 0,
+        name: 'Title'
+    },
+    {
+        maxSubSlides: 4,
+        name: 'GRPC'
+    },
+    {
+        maxSubSlides: 21,
+        name: 'Features'
+    },
+    {
+        maxSubSlides: 22,
+        name: 'UseCase-MicroService'
+    },
+    {
+        maxSubSlides: 3,
+        name: 'UseCase-Versioning'
+    },
+    {
+        maxSubSlides: 4,
+        name: 'TechnicalDetails-Workflow'
+    },
+    {
+        maxSubSlides: 4,
+        name: 'TechnicalDetails-WireFormat'
+    },
+    {
+        maxSubSlides: 4,
+        name: 'TechnicalDetails-LibraryStructure'
+    },
+    {
+        maxSubSlides: 4,
+        name: 'Limitations'
+    },
+];
+
+const slideRoutes = [
+    '/slides',
+];
+for (let i = 0; i < AllSlides.length; i++) {
+    slideRoutes.push(`/slides/${AllSlides[i].name}`);
+    slideRoutes.push(`/slides/${AllSlides[i].name}/0`);
+    slideRoutes.push(`/slides/${AllSlides[i].name}/${AllSlides[i].maxSubSlides}`);
+}
+
 module.exports = {
     pluginOptions: {
         webpackBundleAnalyzer: {
@@ -15,17 +63,8 @@ module.exports = {
             // Required - Routes to render.
             routes: [
                 '/',
-                '/slides',
-                '/slides/1/0',
-                '/slides/2/0',
-                '/slides/3/0',
-                '/slides/4/0',
-                '/slides/5/0',
-                '/slides/6/0',
-                '/slides/7/0',
-                '/slides/8/0',
-                '/slides/9/0',
-                '/slides/10/0',
+                '/demo',
+                ...slideRoutes,
             ],
         }));
     },

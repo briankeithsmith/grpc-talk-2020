@@ -36,8 +36,10 @@
 import { Component, Prop, Vue } from "vue-property-decorator";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faEnvelope, faGlobe } from "@fortawesome/free-solid-svg-icons";
-import { faGithub } from "@fortawesome/free-brands-svg-icons";
+// import individually since component is in an async bundle it is not tree shaken
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons/faEnvelope";
+import { faGlobe } from "@fortawesome/free-solid-svg-icons/faGlobe";
+import { faGithub } from "@fortawesome/free-brands-svg-icons/faGithub";
 
 
 

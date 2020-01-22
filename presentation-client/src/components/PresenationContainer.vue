@@ -1,6 +1,6 @@
 <template>
   <div class="presentation-container">
-    <div class="slide-container" v-on:click="slideClicked($event)">
+    <div class="slide-container container" v-on:click="slideClicked($event)">
       <transition :name="transitionName">
         <component :is="`slide-${slide}`" :subSlide="subSlide"></component>
       </transition>
@@ -16,7 +16,25 @@
         :disabled="!canNavigateBackward"
         type="is-link"
       >
+        <font-awesome-icon icon="angle-double-left" size="lg" />
+      </b-button>
+      <b-button
+        tag="a"
+        :href="previousSubSlideRoute"
+        @click.prevent="navigateSubClicked(false)"
+        :disabled="!canNavigateBackward"
+        type="is-link"
+      >
         <font-awesome-icon icon="angle-left" size="lg" />
+      </b-button>
+      <b-button
+        tag="a"
+        :href="nextSubSlideRoute"
+        @click.prevent="navigateSubClicked(true)"
+        :disabled="!canNavigateForward"
+        type="is-link"
+      >
+        <font-awesome-icon icon="angle-right" size="lg" />
       </b-button>
       <b-button
         tag="a"
@@ -25,7 +43,7 @@
         :disabled="!canNavigateForward"
         type="is-link"
       >
-        <font-awesome-icon icon="angle-right" size="lg" />
+        <font-awesome-icon icon="angle-double-right" size="lg" />
       </b-button>
     </div>
   </div>
@@ -37,11 +55,16 @@ import Vue from 'vue';
 import { Route } from "vue-router";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faAngleRight, faAngleLeft } from "@fortawesome/free-solid-svg-icons";
+import { faAngleRight } from "@fortawesome/free-solid-svg-icons/faAngleRight";
+import { faAngleLeft } from "@fortawesome/free-solid-svg-icons/faAngleLeft";
+import { faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons/faAngleDoubleRight";
+import { faAngleDoubleLeft } from "@fortawesome/free-solid-svg-icons/faAngleDoubleLeft";
 import store from "@/store";
 
 library.add(faAngleRight);
 library.add(faAngleLeft);
+library.add(faAngleDoubleRight);
+library.add(faAngleDoubleLeft);
 
 @Component({
   components: {
@@ -71,13 +94,18 @@ export default class PresentationContainer extends VueClass {
   public get previousSlideRoute(): string {
     return store.getters.slides.previousSlideRoute;
   }
+  public get nextSubSlideRoute(): string {
+    return store.getters.slides.nextSubSlideRoute;
+  }
+  public get previousSubSlideRoute(): string {
+    return store.getters.slides.previousSubSlideRoute;
+  }
   public get canNavigateForward(): boolean {
     return store.getters.slides.canNavigateForward;
   }
   public get canNavigateBackward(): boolean {
     return store.getters.slides.canNavigateBackwards;
   }
-
   public async slideClicked(event: MouseEvent) {
     const elementX = event.x;
     if (event.srcElement === null) {
@@ -93,6 +121,11 @@ export default class PresentationContainer extends VueClass {
 
   public async navigateClicked(forward: boolean) {
     const newUrl = await store.dispatch.slides.navigateOne({ forward });
+    this.navigateToNewPath(newUrl);
+  }
+
+  public async navigateSubClicked(forward: boolean) {
+    const newUrl = await store.dispatch.slides.navigateSubSlide({ forward });
     this.navigateToNewPath(newUrl);
   }
 
@@ -146,6 +179,7 @@ export default class PresentationContainer extends VueClass {
 
 .slide-nav-button-container {
   position: fixed;
+  // top: calc(#{$navbar-height} + 35px);
   bottom: 35px;
   right: 35px;
 }

@@ -47,12 +47,35 @@ const slides = createModule({
 
             return `/slides/${AllSlides[state.currentSlideOrder + 1].name}/0`;
         },
+        nextSubSlideRoute(state) {
+            if (state.currentSlideOrder >= state.maxSlides) {
+                return `/slides/${AllSlides[AllSlides.length - 1].name}/${AllSlides[AllSlides.length - 1].maxSubSlides}`;
+            }
+
+            if (state.currentSubSlide >= state.currentSlide.maxSubSlides) {
+                return `/slides/${AllSlides[state.currentSlideOrder + 1].name}/0`;
+            }
+
+            return `/slides/${AllSlides[state.currentSlideOrder + 1].name}/${state.currentSubSlide + 1}`;
+        },
         previousSlideRoute(state) {
             if (state.currentSlideOrder <= 1) {
                 return `/slides/${AllSlides[0].name}/0`;
             }
 
             return `/slides/${AllSlides[state.currentSlideOrder - 1].name}/0`;
+        },
+        previousSubSlideRoute(state) {
+            if (state.currentSubSlide <= 0) {
+                if (state.currentSlideOrder <= 0) {
+                    return `/slides/${AllSlides[0].name}/0`;
+                } else {
+                    return `/slides/${AllSlides[state.currentSlideOrder - 1].name}/${AllSlides[state.currentSlideOrder - 1].maxSubSlides}`;
+                }
+
+            }
+
+            return `/slides/${AllSlides[state.currentSlideOrder].name}/${state.currentSubSlide - 1}`;
         },
         slideOrder(state) {
             return (name: string) => {

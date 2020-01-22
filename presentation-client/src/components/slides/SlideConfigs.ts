@@ -27,17 +27,22 @@ export const UseCasesVersioning: SlideConfig = {
 
 export const TechnicalDetailsWorkflow: SlideConfig = {
   maxSubSlides: 4,
-  name: 'TechnicalDetailsWorkflow'
+  name: 'TechnicalDetails-Workflow'
 }
 
 export const TechnicalDetailsWireFormat: SlideConfig = {
   maxSubSlides: 4,
-  name: 'TechnicalDetailsWireFormat'
+  name: 'TechnicalDetails-WireFormat'
 };
 
 export const TechnicalDetailsLibraryStructure: SlideConfig = {
   maxSubSlides: 4,
-  name: 'TechnicalDetailsLibraryStructure'
+  name: 'TechnicalDetails-LibraryStructure'
+};
+
+export const Limitations: SlideConfig = {
+  maxSubSlides: 4,
+  name: 'Limitations'
 };
 
 export const AllSlides: ReadonlyArray<SlideConfig> = [
@@ -49,4 +54,5 @@ export const AllSlides: ReadonlyArray<SlideConfig> = [
   TechnicalDetailsWorkflow,
   TechnicalDetailsWireFormat,
   TechnicalDetailsLibraryStructure,
+  Limitations,
 ];

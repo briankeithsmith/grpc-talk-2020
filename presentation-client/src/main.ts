@@ -4,8 +4,13 @@ import router from './router'
 import store from './store'
 import './registerServiceWorker'
 
-import Buefy from 'buefy'
-Vue.use(Buefy);
+// import Buefy from 'buefy'
+// Vue.use(Buefy);
+
+import { Navbar, Button, Slider } from 'buefy';
+Vue.use(Navbar);
+Vue.use(Button);
+Vue.use(Slider);
 
 Vue.config.productionTip = false
 import '@/styles/_index.scss';

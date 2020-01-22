@@ -33,8 +33,14 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 
+
+import { Navbar } from 'buefy';
+Vue.use(Navbar);
+
+
 @Component({
-  components: {}
+  components: {
+  }
 })
 export default class App extends Vue {}
 </script>
