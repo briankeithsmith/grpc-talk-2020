@@ -1,6 +1,6 @@
 <template>
   <div class="presentation-container">
-    <div class="slide-container container" v-on:click="slideClicked($event)">
+    <div class="slide-container" v-on:click="slideClicked($event)">
       <transition :name="transitionName">
         <component :is="`slide-${slide}`" :subSlide="subSlide"></component>
       </transition>
