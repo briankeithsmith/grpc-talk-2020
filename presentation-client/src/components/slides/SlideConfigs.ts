@@ -15,14 +15,26 @@ export const FeaturesConfig: SlideConfig = {
   name: 'Features'
 };
 
-export const UseCasesConfig: SlideConfig = {
+export const UseCasesMicroService: SlideConfig = {
   maxSubSlides: 22,
   name: 'UseCase-MicroService'
 };
+
+export const UseCasesVersioning: SlideConfig = {
+  maxSubSlides: 3,
+  name: 'UseCase-Versioning'
+}
+
+export const TechnicalDetails: SlideConfig = {
+  maxSubSlides: 3,
+  name: 'TechnicalDetails'
+}
 
 export const AllSlides: ReadonlyArray<SlideConfig> = [
   TitleConfig,
   GRPCConfig,
   FeaturesConfig,
-  UseCasesConfig,
+  UseCasesMicroService,
+  UseCasesVersioning,
+  TechnicalDetails,
 ];

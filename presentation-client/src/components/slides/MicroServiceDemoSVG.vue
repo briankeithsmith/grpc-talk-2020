@@ -172,7 +172,7 @@
       <text y="676.408" x="478.684" v-if="subSlide === 13">.3 (s)</text>
       <text y="735.474" x="322.662" v-if="subSlide === 14">.4 (s)</text>
       <text y="530.634" x="475.910" v-if="subSlide === 15">.6 (s)</text>
-      <text y="410.695" x="350.108" v-if="subSlide === 16">.6 (s)</text>
+      <text y="410.695" x="350.108" v-if="subSlide === 16">.8 (s)</text>
       <text y="479.551" x="354.826" v-if="subSlide === 17">.3 (s)</text>
       <text y="519.681" x="386.696" v-if="subSlide >= 18 && subSlide <= 20">.5 (s)</text>
       <text y="723.659" x="200.768" v-if="subSlide >= 19 && subSlide <= 20">.5 (s)</text>

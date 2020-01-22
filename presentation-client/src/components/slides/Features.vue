@@ -63,7 +63,7 @@
               </ol>
             </div>
             <div class="column is-hidden-mobile is-hidden-tablet-only">
-              <highlight-code v-if="subSlide >= tabStart(2, 1)" :code="sourceCode" lang="protobuf"></highlight-code>
+              <highlight-code class="my-code" v-if="subSlide >= tabStart(2, 1)" :code="sourceCode" lang="protobuf"></highlight-code>
             </div>
           </div>
         </div>
@@ -133,7 +133,6 @@ import store from '@/store';
 import VueHighlightJS from "vue-highlight.js";
 // @ts-ignore
 import protobuf from "highlight.js/lib/languages/protobuf";
-import "highlight.js/styles/atom-one-dark.css";
 
 Vue.use(VueHighlightJS, {
   languages: {
@@ -199,4 +198,5 @@ export default class FeaturesSlide extends Vue {
 </script>
 
 <style lang="scss" scoped>
+@import "../../styles/code.scss";
 </style>

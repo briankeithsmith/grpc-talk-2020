@@ -1,20 +1,30 @@
 <template>
   <div class="presentation-container">
-    
     <div class="slide-container" v-on:click="slideClicked($event)">
       <transition :name="transitionName">
-        <component :is="`slide-${slide}`" 
-          :subSlide="subSlide"></component>
+        <component :is="`slide-${slide}`" :subSlide="subSlide"></component>
       </transition>
     </div>
-    
-    <div v-if="showSlideNumber" class="slide-slide-number"> {{ slide }}</div>
+
+    <!-- <div v-if="showSlideNumber" class="slide-slide-number">{{ slide }}</div> -->
 
     <div v-if="showControls" class="slide-nav-button-container">
-      <b-button tag="a" :href="previousSlideRoute" @click.prevent="navigateClicked(false)" :disabled="!canNavigateBackward" type="is-link">
-      <font-awesome-icon icon="angle-left" size="lg" />
+      <b-button
+        tag="a"
+        :href="previousSlideRoute"
+        @click.prevent="navigateClicked(false)"
+        :disabled="!canNavigateBackward"
+        type="is-link"
+      >
+        <font-awesome-icon icon="angle-left" size="lg" />
       </b-button>
-      <b-button tag="a" :href="nextSlideRoute" @click.prevent="navigateClicked(true)" :disabled="!canNavigateForward" type="is-link">
+      <b-button
+        tag="a"
+        :href="nextSlideRoute"
+        @click.prevent="navigateClicked(true)"
+        :disabled="!canNavigateForward"
+        type="is-link"
+      >
         <font-awesome-icon icon="angle-right" size="lg" />
       </b-button>
     </div>
@@ -22,7 +32,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue, Watch } from "vue-property-decorator";
+import { Component, Prop, Vue as VueClass, Watch } from "vue-property-decorator";
+import Vue from 'vue';
 import { Route } from "vue-router";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
@@ -37,14 +48,19 @@ library.add(faAngleLeft);
     FontAwesomeIcon
   }
 })
-export default class PresentationContainer extends Vue {
+export default class PresentationContainer extends VueClass {
   @Prop({ default: true, type: Boolean }) public showSlideNumber!: number;
   @Prop({ default: true, type: Boolean }) public showControls!: boolean;
 
   public transitionName: string = "fade";
 
   public get slide() {
-    return store.getters.slides.currentSlide.name;
+    const name = store.getters.slides.currentSlide.name;
+    const component = (Vue as any).options.components['slide-'+name];
+    if (!component) {
+      this.$router.push({ name: 'slide-not-found' })
+    }
+    return name;
   }
   public get subSlide(): number {
     return store.getters.slides.currentSub;
@@ -69,7 +85,9 @@ export default class PresentationContainer extends Vue {
     }
     const elementWidth = (event.srcElement as HTMLElement).clientWidth;
     const clickRatio = elementX / elementWidth;
-    const newUrl = await store.dispatch.slides.navigateSubSlide({forward: clickRatio >= .5});
+    const newUrl = await store.dispatch.slides.navigateSubSlide({
+      forward: clickRatio >= 0.5
+    });
     this.navigateToNewPath(newUrl);
   }
 
@@ -94,38 +112,27 @@ export default class PresentationContainer extends Vue {
 </script>
 
 <style scoped lang="scss">
-@import '../styles/bulma.customize.scss';
+@import "../styles/bulma.customize.scss";
 
-/* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px) {
+@media only screen and (min-width: $tablet) {
   .slide-container {
     font-size: 28px;
   }
 }
 
-/* Small devices (portrait tablets and large phones, 600px and up) */
-@media only screen and (min-width: 600px) {
-  .slide-container {
-    font-size: 28px;
-  }
-}
-
-/* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: $desktop) {
   .slide-container {
     font-size: 32px;
   }
 }
 
-/* Large devices (laptops/desktops, 992px and up) */
-@media only screen and (min-width: 992px) {
+@media only screen and (min-width: $widescreen) {
   .slide-container {
     font-size: 36px;
   }
 }
 
-/* Extra large devices (large laptops and desktops, 1200px and up) */
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: $fullhd) {
   .slide-container {
     font-size: 40px;
   }
@@ -151,22 +158,26 @@ export default class PresentationContainer extends Vue {
 
 .full-height-slide {
   height: calc(100vh - #{$navbar-height});
+  max-height: calc(100vh - #{$navbar-height});
 }
 
 $transition-duration: 1s;
 
-.fade-enter-active, .fade-leave-active {
+.fade-enter-active,
+.fade-leave-active {
   transition: opacity $transition-duration;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
 }
-.fade-enter,.fade-leave-to {
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
 
-.slide-left-enter-active, .slide-left-leave-active {
+.slide-left-enter-active,
+.slide-left-leave-active {
   transition: transform $transition-duration;
   position: absolute;
   top: 0;
@@ -180,7 +191,8 @@ $transition-duration: 1s;
   transform: translateX(-100%);
 }
 
-.slide-right-enter-active, .slide-right-leave-active {
+.slide-right-enter-active,
+.slide-right-leave-active {
   transition: transform $transition-duration;
   position: absolute;
   top: 0;

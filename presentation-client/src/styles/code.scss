@@ -1,0 +1,25 @@
+@import "./bulma.customize.scss";
+
+@media only screen and (min-width: $tablet) {
+    .my-code {
+      font-size: 20px;
+    }
+  }
+  
+  @media only screen and (min-width: $desktop) {
+    .my-code {
+      font-size: 24px;
+    }
+  }
+  
+  @media only screen and (min-width: $widescreen) {
+    .my-code {
+      font-size: 28px;
+    }
+  }
+  
+  @media only screen and (min-width: $fullhd) {
+    .my-code {
+      font-size: 32px;
+    }
+  }
