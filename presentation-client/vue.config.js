@@ -68,5 +68,15 @@ module.exports = {
             ],
         }));
     },
-    publicPath: process.env.NODE_ENV === 'production' ? '/grpc-talk-2020/' : '/grpc-talk-2020/'
+    publicPath: '/grpc-talk-2020/',
+    pwa: {
+        name: 'GRPC Presentation',
+        themeColor: '#2DA6B0',
+        msTileColor: '#000000',
+        appleMobileWebAppCapable: 'yes',
+        appleMobileWebAppStatusBarStyle: 'black',
+        manifestOptions: {
+            short_name: 'GRPC',
+        }
+    },
 }
