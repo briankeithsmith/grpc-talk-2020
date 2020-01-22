@@ -1,10 +1,8 @@
 <template>
-  <section>
     <svg
       id="micro-service-demo-svg"
       viewBox="0 0 825 900"
-      height="700px"
-      width="475px"
+      preserveAspectRatio="xMidYMid meet"
       
       xmlns="http://www.w3.org/2000/svg"
       xmlns:bx="https://boxy-svg.com"
@@ -198,7 +196,6 @@
         <text x="358" y="-196" class="summary">Remaining Time :</text>
       </g>
     </svg>
-  </section>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
@@ -270,6 +267,8 @@ export default class MicroServiceDemoSVGComponent extends Vue {
   white-space: pre;
   fill: rgb(51, 51, 51);
   font-size: 19px;
+  
+  height: 100%; background-color: red;
 }
 
 #micro-service-demo-svg text.big {

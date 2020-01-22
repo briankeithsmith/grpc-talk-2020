@@ -1,7 +1,7 @@
 <template>
   <div class="presentation-container">
     <div class="slide-container" v-on:click="slideClicked($event)">
-      <transition :name="transitionName">
+      <transition :name="transitionName" mode="out-in">
         <component :is="`slide-${slide}`" :subSlide="subSlide"></component>
       </transition>
     </div>
@@ -22,7 +22,7 @@
         tag="a"
         :href="previousSubSlideRoute"
         @click.prevent="navigateSubClicked(false)"
-        :disabled="!canNavigateBackward"
+        :disabled="!canNavigateSubBackward"
         type="is-link"
       >
         <font-awesome-icon icon="angle-left" size="lg" />
@@ -31,7 +31,7 @@
         tag="a"
         :href="nextSubSlideRoute"
         @click.prevent="navigateSubClicked(true)"
-        :disabled="!canNavigateForward"
+        :disabled="!canNavigateSubForward"
         type="is-link"
       >
         <font-awesome-icon icon="angle-right" size="lg" />
@@ -106,6 +106,12 @@ export default class PresentationContainer extends VueClass {
   public get canNavigateBackward(): boolean {
     return store.getters.slides.canNavigateBackwards;
   }
+  public get canNavigateSubForward(): boolean {
+    return store.getters.slides.canNavigateSubForward;
+  }
+  public get canNavigateSubBackward(): boolean {
+    return store.getters.slides.canNavigateSubBackwards;
+  }
   public async slideClicked(event: MouseEvent) {
     const elementX = event.x;
     if (event.srcElement === null) {
@@ -113,10 +119,10 @@ export default class PresentationContainer extends VueClass {
     }
     const elementWidth = (event.srcElement as HTMLElement).clientWidth;
     const clickRatio = elementX / elementWidth;
-    const newUrl = await store.dispatch.slides.navigateSubSlide({
-      forward: clickRatio >= 0.5
-    });
-    this.navigateToNewPath(newUrl);
+    // const newUrl = await store.dispatch.slides.navigateSubSlide({
+    //   forward: clickRatio >= 0.5
+    // });
+    // this.navigateToNewPath(newUrl);
   }
 
   public async navigateClicked(forward: boolean) {
@@ -147,6 +153,12 @@ export default class PresentationContainer extends VueClass {
 <style scoped lang="scss">
 @import "../styles/bulma.customize.scss";
 
+@media only screen and (max-width: $tablet) {
+  .full-height-slide {
+    margin-bottom: 165px;
+  }
+}
+
 @media only screen and (min-width: $tablet) {
   .slide-container {
     font-size: 28px;
@@ -174,6 +186,7 @@ export default class PresentationContainer extends VueClass {
 .presentation-container {
   position: relative;
   height: calc(100vh - #{$navbar-height});
+  margin-top: 25px;
   user-select: none;
 }
 
@@ -191,18 +204,17 @@ export default class PresentationContainer extends VueClass {
 }
 
 .full-height-slide {
+  @extend .container;
+  @extend .section;
   height: calc(100vh - #{$navbar-height});
   max-height: calc(100vh - #{$navbar-height});
 }
 
-$transition-duration: 1s;
+$transition-duration: .35s;
 
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity $transition-duration;
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
 }
 .fade-enter,

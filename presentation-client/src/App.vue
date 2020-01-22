@@ -1,9 +1,9 @@
 <template>
   <section>
-    <b-navbar class="is-primary">
+    <b-navbar class="is-primary is-fixed-top">
       <template slot="brand">
         <b-navbar-item tag="router-link" :to="{ name: 'home' }">
-          <img src="@/assets/slides/grpc-logo.png" alt="GRPC" />
+          <img src="@/assets/grpc-logo-nav.webp" alt="GRPC" />
         </b-navbar-item>
       </template>
       <template slot="start">
@@ -32,10 +32,6 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-
-
-import { Navbar } from 'buefy';
-Vue.use(Navbar);
 
 
 @Component({

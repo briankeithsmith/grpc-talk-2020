@@ -37,6 +37,19 @@ const slides = createModule({
         canNavigateBackwards(state) {
             return state.currentSlideOrder > 0;
         },
+        canNavigateSubForward(state) {
+            if (state.currentSlideOrder < state.maxSlides) {
+                return true;
+            }
+            return state.currentSubSlide < state.currentSlide.maxSubSlides;
+        },
+        canNavigateSubBackwards(state) {
+            if (state.currentSlideOrder > 0) {
+                return true;
+            }
+
+            return state.currentSubSlide > 0;
+        },
         currentSlideRoute(state) {
             return `/slides/${state.currentSlide.name}/${state.currentSubSlide.toFixed(0)}`;
         },

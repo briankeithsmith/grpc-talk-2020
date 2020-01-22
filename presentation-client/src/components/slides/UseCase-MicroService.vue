@@ -1,30 +1,26 @@
 <template>
-  <section class="full-height-slide">
-    <div class="container">
-      <h1 class="title has-text-centered has-text-primary">Use Case</h1>
-      <h4 class="subtitle has-text-centered">Microservices</h4>
+  <div class="full-height-slide">
+    <h1 class="title has-text-centered has-text-primary">Use Case</h1>
+    <h4 class="subtitle has-text-centered">Microservices</h4>
 
-      <section>
-        <div class="columns is-8">
-          <div class="column is-4" @click.stop>
-            <h4 class="has-text-centered">Timeline</h4>
-            <b-slider
-              :min="0"
-              :max="22"
-              ticks
-              :tooltip="false"
-              v-model="sliderValue"
-              @change="sliderChanged"
-            ></b-slider>
-            <p>{{ stepSummary }}</p>
-          </div>
-          <div class="column">
-            <MicroServiceDemoSVG :subSlide="subSlide" />
-          </div>
-        </div>
-      </section>
+    <div class="columns is-desktop">
+      <div class="column is-4">
+        <h4 class="has-text-centered">Timeline</h4>
+        <b-slider
+          :min="0"
+          :max="22"
+          ticks
+          :tooltip="false"
+          v-model="sliderValue"
+          @change="sliderChanged"
+        ></b-slider>
+        <p>{{ stepSummary }}</p>
+      </div>
+      <div class="column is-8">
+        <MicroServiceDemoSVG :subSlide="subSlide" />
+      </div>
     </div>
-  </section>
+  </div>
 </template>
 
 <script lang="ts">
@@ -99,5 +95,4 @@ export default class UseCasesMicroService extends Vue {
 </script>
 
 <style lang="scss" scoped>
-
 </style>

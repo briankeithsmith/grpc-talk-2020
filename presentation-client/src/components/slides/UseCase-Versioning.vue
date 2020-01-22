@@ -1,6 +1,5 @@
 <template>
-  <section class="full-height-slide">
-    <div class="container">
+  <div class="full-height-slide">
       <h1 class="title has-text-centered has-text-primary">Use Case</h1>
       <h4 class="subtitle has-text-centered">Versioning</h4>
     
@@ -39,15 +38,15 @@
             <li>Single server can implement multiple services</li>
           </ul>
         </div>
-        <highlight-code class="my-code" :code="sourceCode(0)" lang="protobuf"></highlight-code>
+        <highlight-code class="my-code" :code="sourceCode(0)" v-if="subSlide === tabStart(1,0)" lang="protobuf"></highlight-code>
+        <highlight-code class="my-code" :code="sourceCode(1)" v-if="subSlide === tabStart(1,1)" lang="protobuf"></highlight-code>
       </section>
 
       <section v-if="isTab(2)">
-        <highlight-code class="my-code" :code="sourceCode(1)" lang="protobuf" v-if="subSlide === tabStart(2,0)"></highlight-code>
-        <highlight-code class="my-code" :code="sourceCode(2)" lang="protobuf" v-if="subSlide === tabStart(2,1)"></highlight-code>
+        <highlight-code class="my-code" :code="sourceCode(2)" lang="protobuf" v-if="subSlide === tabStart(2,0)"></highlight-code>
+        <highlight-code class="my-code" :code="sourceCode(3)" lang="protobuf" v-if="subSlide === tabStart(2,1)"></highlight-code>
       </section>
     </div>
-  </section>
 </template>
 
 <script lang="ts">
@@ -65,6 +64,13 @@ Vue.use(VueHighlightJS, {
 });
 
 const sourceCodeServiceVersions = `
+service FeatureServicev1 {
+  rpc GetFeatures (FeatureRequest) returns (FeaturesResponse);
+  rpc GetFeatureDetail (Feature) returns (FeatureDetail);
+}
+`;
+
+const sourceCodeServiceVersions2 = `
 service FeatureServicev1 {
   rpc GetFeatures (FeatureRequest) returns (FeaturesResponse);
   rpc GetFeatureDetail (Feature) returns (FeatureDetail);
@@ -103,10 +109,11 @@ service FeatureService {
 
 const sourceCode = [
   sourceCodeServiceVersions,
+  sourceCodeServiceVersions2,
   sourceCodeMessageVersion,
   sourceCodeMessageVersion2,
 ];
-const tabEndRanges = [1, 3];
+const tabEndRanges = [2, 4];
 
 @Component({})
 export default class UseCaseVersioning extends Vue {

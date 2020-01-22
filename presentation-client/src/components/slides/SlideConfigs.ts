@@ -41,7 +41,7 @@ export const TechnicalDetailsLibraryStructure: SlideConfig = {
 };
 
 export const Limitations: SlideConfig = {
-  maxSubSlides: 4,
+  maxSubSlides: 6,
   name: 'Limitations'
 };
 

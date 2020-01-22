@@ -1,10 +1,10 @@
 <template>
-  <section class="hero is-primary is-fullheight-with-navbar">
+  <section class="hero is-primary is-fullheight">
     <div class="hero-body">
       <div class="container has-text-centered">
         <h1 class="title">GRPC &amp; Protobuf</h1>
         <h4 class="subtitle">Intro to next generation inter-service communication protocol</h4>
-        <div class="level">
+        <div class="level section">
           <div class="buttons level-item">
             <b-button tag="a" href="https://v2tools.com" target="_blank">Adam Vaden</b-button>
             <a href="https://github.com/abvaden" class="button">

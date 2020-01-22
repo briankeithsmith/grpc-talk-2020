@@ -1,6 +1,7 @@
 <template>
   <div class="full-height-slide">
     <h1 class="title has-text-centered has-text-primary">Features</h1>
+    <!-- <h4 class="is-size-4 has-text-centered has-text-primary">Features</h4> -->
 
     <div class="tabs is-centered is-boxed is-large">
       <ul>
@@ -10,7 +11,9 @@
           >Code Generation</router-link>
         </li>
         <li :class="{'is-active': isTab(2)}" @click.stop>
-          <router-link :to="{ name: 'slides', params: {'silde': currentSlideNumber, subSlide: tabEnd(2)}}">Streaming</router-link>
+          <router-link
+            :to="{ name: 'slides', params: {'silde': currentSlideNumber, subSlide: tabEnd(2)}}"
+          >Streaming</router-link>
         </li>
         <li :class="{'is-active': isTab(3)}" @click.stop>
           <router-link
@@ -18,12 +21,13 @@
           >Load Balancing</router-link>
         </li>
         <li :class="{'is-active': isTab(4)}" @click.stop>
-          <router-link :to="{ name: 'slides', params: {'silde': currentSlideNumber, subSlide: tabEnd(4)}}">...</router-link>
+          <router-link
+            :to="{ name: 'slides', params: {'silde': currentSlideNumber, subSlide: tabEnd(4)}}"
+          >...</router-link>
         </li>
       </ul>
     </div>
 
-    <section>
       <transition name="fade" mode="out-in">
         <div v-if="isTab(1)" key="code-generation" class="container">
           <a
@@ -43,27 +47,42 @@
 
         <div v-if="isTab(2)" class="content" key="streaming">
           <h4 class="has-text-centered">4 Different RPC Options</h4>
-          <div class="columns is-vcentered">
-            <div class="column is-narrow">
+          <div class="columns is-vcentered is-desktop">
+            <div class="column is-4">
               <ol>
                 <li v-if="subSlide >= tabStart(2, 1)">
-                  <span class="is-size-5" :class="{'has-text-primary': subSlide == tabStart(2,1)}">Unary</span>
+                  <span
+                    class="is-size-6"
+                    :class="{'has-text-primary': subSlide == tabStart(2,1)}"
+                  >Unary</span>
                 </li>
                 <li v-if="subSlide >= tabStart(2, 2)">
-                  <span class="is-size-5" :class="{'has-text-primary': subSlide == tabStart(2,2)}">Server Streaming</span>
+                  <span
+                    class="is-size-6"
+                    :class="{'has-text-primary': subSlide == tabStart(2,2)}"
+                  >Server Streaming</span>
                 </li>
                 <li v-if="subSlide >= tabStart(2, 3)">
-                  <span class="is-size-5" :class="{'has-text-primary': subSlide == tabStart(2,3)}">Client Streaming</span>
+                  <span
+                    class="is-size-6"
+                    :class="{'has-text-primary': subSlide == tabStart(2,3)}"
+                  >Client Streaming</span>
                 </li>
                 <li v-if="subSlide >= tabStart(2, 4)">
-                  <span class="is-size-5"
+                  <span
+                    class="is-size-6"
                     :class="{'has-text-primary': subSlide == tabStart(2,4)}"
-                  >Bidirectional Streaming</span>
+                  >Bidirectional</span>
                 </li>
               </ol>
             </div>
-            <div class="column is-hidden-mobile is-hidden-tablet-only">
-              <highlight-code class="my-code" v-if="subSlide >= tabStart(2, 1)" :code="sourceCode" lang="protobuf"></highlight-code>
+            <div class="column">
+              <highlight-code
+                class="my-code"
+                v-if="subSlide >= tabStart(2, 1)"
+                :code="sourceCode"
+                lang="protobuf"
+              ></highlight-code>
             </div>
           </div>
         </div>
@@ -122,13 +141,12 @@
           </div>
         </div>
       </transition>
-    </section>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Prop, Vue } from "vue-property-decorator";
-import store from '@/store';
+import store from "@/store";
 
 import VueHighlightJS from "vue-highlight.js";
 // @ts-ignore
@@ -139,7 +157,6 @@ Vue.use(VueHighlightJS, {
     protobuf
   }
 });
-
 
 const tabEndRanges = [4, 9, 13, 99];
 const unaryCode = `
@@ -167,7 +184,7 @@ export default class FeaturesSlide extends Vue {
   }
 
   public get currentSlideNumber() {
-      return store.getters.slides.currentSlide;
+    return store.getters.slides.currentSlide;
   }
 
   public tabEnd(tabNumber: number) {
