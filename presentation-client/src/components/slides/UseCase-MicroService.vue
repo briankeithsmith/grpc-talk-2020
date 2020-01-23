@@ -4,7 +4,7 @@
     <h4 class="subtitle has-text-centered">Microservices</h4>
 
     <div class="columns is-desktop">
-      <div class="column is-4">
+      <div class="column is-5">
         <h4 class="has-text-centered">Timeline</h4>
         <b-slider
           :min="0"
@@ -16,7 +16,7 @@
         ></b-slider>
         <p>{{ stepSummary }}</p>
       </div>
-      <div class="column is-8">
+      <div class="column">
         <MicroServiceDemoSVG :subSlide="subSlide" />
       </div>
     </div>
@@ -30,28 +30,28 @@ import store from "@/store";
 import { Route } from "vue-router";
 
 const stepDefinitions = [
-  `Micro service booking setup example call to search service to get bookings for a given area`,
-  `Authenticate user`,
-  `Simulataneously call to recomendations and adds service`,
-  `Recomendation service make simultaneous calls to users and reservations services`,
-  `Recomendations process responses and returns to search`,
-  `Search calls to comments based on recomendations`,
+  `Micro service hotel booking example. Client calls a search api to get available bookings for a given area`,
+  `Search service makes call to Authentication service to authenticate user`,
+  `Search simulataneously calls to recomendation and adds service`,
+  `Recomendation service make simultaneous calls to Users and Reservations services`,
+  `Recomendations process responses from Users and Reservations services and returns`,
+  `Search calls to Comments service to get top comments for the recomendations`,
   `Search aggergrates all results and returns to client`,
-  `Client makes call to search service to get available listings with 1.5 (s) deadline`,
-  `Search service calls to Authentication service with 1.5 (s) deadline`,
-  `Authentication service returns to the search service in 0.1 (s). Search service has 1.4 (s) left to fufill the request`,
-  `Search service makes 2 asychronus calls to to the Adds and Recomendations service with a 1.4 (s) deadline`,
+  `Client makes call to Search service to get available listings and specifies a 1.5 (s) deadline`,
+  `Search service authenticates user by calling the Authentication service with 1.5 (s) deadline`,
+  `Authentication service returns to the search service in 0.1 (s). Search service has 1.4 (s) left to in the deadline provided with the request`,
+  `Search service makes 2 asynchronous calls to the Adds and Recomendations service with a 1.4 (s) deadline`,
   `Recomendation takes 0.2 (s) to process the request 0.3 (s) has elapsed since user made request 1.2 (s) remaining.`,
   `Makes 2 asychronous calls to Reservations and Users service's with 1.2 (s) deadline`,
-  `After 0.3 (s) Reservations service responds, recomentations service still waiting for response from Users service`,
-  `After 0.1 (s) Users service responds for a total call time of 0.4 (s)`,
-  `Recomendations service responds to serarch service with a batch of recomendations total time elapsed is not 0.7 (s)`,
-  `Search service calls to comments service with 0.8 (s) deadline`,
-  `Comments service responds in 0.3 (s) there are now 0.5 (s) left in the users original deadline`,
-  `Since there are 0.5 (s) remaining serach service can now request another batch of recomentaions with a 0.5 (s) deadline`,
-  `Recomendations service process request and makes calls to Reservations and users service with 0.5 (s) deadline`,
-  `After 0.1 (s) more the adds service responds with the adds to be included leaving 0.4 (s) left in the original deadline`,
-  `Search service decides to cancel recomendations request and return early to user, cancelation is propogated to users and reservations`,
+  `After 0.3 (s) the Reservations service responds. Recomentations service still waiting for response from Users service`,
+  `After another 0.1 (s) Users service responds. Recomendations service can now aggergrate the results from Users and Reservations to filter out reservations`,
+  `Recomendations service responds to Serarch service with a batch of recomendations, 0.7 (s) of the time budget has elapsed`,
+  `Search service calls to Comments service with 0.8 (s) deadline to get top comments for results`,
+  `Comments service responds in 0.3 (s) Search service is now only waiting on Adds service`,
+  `With 0.5 (s) remaining serach service can now request another batch of recomentaions with a 0.5 (s) deadline`,
+  `Recomendations repeats previous process and makes requests to Reservations and Users services`,
+  `After 0.1 (s) the Adds service responds with the adds to be included leaving 0.4 (s) left in the original time budget`,
+  `Search service decides to cancel the call to Recomendations service and return early to user, cancelation is propogated to users and reservations`,
   `Search service responds in 1.2 (s)`
 ];
 
