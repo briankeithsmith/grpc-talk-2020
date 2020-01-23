@@ -2,7 +2,7 @@
   <div class="presentation-container">
     <div class="slide-container" v-on:click="slideClicked($event)">
       <transition :name="transitionName" mode="out-in">
-        <component :is="`slide-${slide}`" :subSlide="subSlide"></component>
+        <component :is="`slide-${talkName}-${slide}`" :subSlide="subSlide"></component>
       </transition>
     </div>
 
@@ -76,6 +76,7 @@ export default class PresentationContainer extends VueClass {
   @Prop({ default: true, type: Boolean }) public showControls!: boolean;
 
   public transitionName: string = "fade";
+  public talkName: string = 'grpc';
 
   public get slide() {
     const name = store.getters.slides.currentSlide.name;

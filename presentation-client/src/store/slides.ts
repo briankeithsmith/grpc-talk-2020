@@ -1,6 +1,6 @@
 import { createModule } from "direct-vuex"
 import { moduleActionContext } from "./index"
-import { AllSlides, TitleConfig } from '@/components/slides/SlideConfigs';
+import { AllSlides, TitleConfig } from '@/components/slides/grpc/SlideConfigs';
 
 export interface SlideState {
     currentSlide: SlideConfig;

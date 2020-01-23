@@ -152,5 +152,5 @@ export default class UseCaseVersioning extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import "../../styles/code.scss";
+@import "../../../styles/code.scss";
 </style>

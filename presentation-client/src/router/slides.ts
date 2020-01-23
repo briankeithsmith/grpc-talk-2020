@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import { RouteConfig, Route } from 'vue-router';
-import { AllSlides } from '@/components/slides/SlideConfigs';
+import { AllSlides } from '@/components/slides/grpc/SlideConfigs';
 
 export const slides: RouteConfig[] = [{
     path: '/slides',
@@ -12,7 +12,7 @@ export const slides: RouteConfig[] = [{
         },
         {
             path: '/slides/:slide/:subSlide',
-            component: () => import(/* webpackChunkName: "slides" */ '../components/slides/Title.vue'),
+            component: () => import(/* webpackChunkName: "slides" */ '../components/slides/grpc/Title.vue'),
             name: 'slides'
         },
         {
@@ -25,7 +25,7 @@ export const slides: RouteConfig[] = [{
 
 for (let slideConfig of AllSlides) {
     Vue.component(
-        `slide-${slideConfig.name}`,
-        () => import(/* webpackChunkName: "slides" */ `../components/slides/${slideConfig.name}.vue`)
+        `slide-grpc-${slideConfig.name}`,
+        () => import(/* webpackChunkName: "slides" */ `../components/slides/grpc/${slideConfig.name}.vue`)
     )    
 }

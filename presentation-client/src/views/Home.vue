@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import TitleSlide from '@/components/slides/Title';
+import TitleSlide from '@/components/slides/grpc/Title';
 
 export default {
   name: 'home',

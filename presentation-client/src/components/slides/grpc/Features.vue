@@ -215,5 +215,5 @@ export default class FeaturesSlide extends Vue {
 </script>
 
 <style lang="scss" scoped>
-@import "../../styles/code.scss";
+@import "../../../styles/code.scss";
 </style>
