@@ -3,6 +3,10 @@ on:
   push:
     branches:
       - master
+    push:
+      paths:
+        - '.github/workflows/deploy-to-pages.yml'
+        - 'presentation-client/**'
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
