@@ -17,6 +17,8 @@
     "bulma-extensions": "^6.2.7",
     "core-js": "^3.4.4",
     "direct-vuex": "^0.9.9",
+    "google-protobuf": "^3.11.2",
+    "grpc-web": "^1.0.7",
     "highlight.js": "^9.18.0",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.10",
@@ -27,6 +29,7 @@
     "vuex": "^3.1.2"
   },
   "devDependencies": {
+    "@types/google-protobuf": "^3.7.2",
     "@types/highlight.js": "^9.12.3",
     "@types/jest": "^24.0.19",
     "@vue/cli-plugin-babel": "^4.1.0",
