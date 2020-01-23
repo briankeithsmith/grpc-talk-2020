@@ -12,11 +12,16 @@
                 <font-awesome-icon :icon="['fab','github']" size="lg"></font-awesome-icon>
               </span>
             </a>
+            <a href="https://www.linkedin.com/in/adam-vaden-4a77057b/" class="button">
+              <span class="icon">
+                <font-awesome-icon :icon="['fab', 'linkedin']"></font-awesome-icon>
+              </span>
+            </a>
             <a type="text" href="mailto:adam@v2tools.com" class="button">
               <span class="icon">
                 <font-awesome-icon icon="envelope"></font-awesome-icon>
               </span>
-              <span>adam@v2tols.com</span>
+              <span>adam@v2tools.com</span>
             </a>
             <a href="https://v2tools.com" class="button">
               <span class="icon">
@@ -40,12 +45,15 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons/faEnvelope";
 import { faGlobe } from "@fortawesome/free-solid-svg-icons/faGlobe";
 import { faGithub } from "@fortawesome/free-brands-svg-icons/faGithub";
+import { faLinkedin } from '@fortawesome/free-brands-svg-icons/faLinkedin';
 
 
 
 library.add(faGithub);
 library.add(faGlobe);
 library.add(faEnvelope);
+library.add(faLinkedin);
+
 
 @Component({
   components: {

@@ -40,7 +40,7 @@
             <ul>
               <li v-if="subSlide >= tabStart(1, 1)">Generate code through cli or api</li>
               <li v-if="subSlide >= tabStart(1, 2)">Optional standard library</li>
-              <li v-if="subSlide >= tabStart(1, 3)">Composeable</li>
+              <li v-if="subSlide >= tabStart(1, 3)">Composable</li>
             </ul>
           </div>
         </div>
@@ -123,7 +123,7 @@
             <div class="content">
               <ul>
                 <li v-if="subSlide >= tabStart(4,0)">Deadlines</li>
-                <li v-if="subSlide >= tabStart(4,1)">Cancelation Propogation</li>
+                <li v-if="subSlide >= tabStart(4,1)">cancellation Propogation</li>
                 <li v-if="subSlide >= tabStart(4,2)">Request Compression</li>
                 <li v-if="subSlide >= tabStart(4,3)">TLS / SSL</li>
                 <li v-if="subSlide >= tabStart(4,4)">Synchronous &amp; Asynchronous</li>

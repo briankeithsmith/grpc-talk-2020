@@ -29,7 +29,7 @@
           rx="25"
           ry="25"
         />
-        <text class="service-name" x="26.667" y="242.778">Recomendations</text>
+        <text class="service-name" x="26.667" y="242.778">Recommendations</text>
       </g>
       <g transform="matrix(1, 0, 0, 1, 65.058495, 131.001465)">
         <rect class="service-box" x="369.444" y="225" width="123.889" height="100" rx="25" ry="25" />

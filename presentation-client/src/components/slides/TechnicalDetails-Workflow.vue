@@ -9,7 +9,7 @@
       <section>
         <div class="content">
             <ol>
-                <li v-if="subSlide >= 1">Create .proto files defining messges and services</li>
+                <li v-if="subSlide >= 1">Create .proto files defining messages and services</li>
                 <li v-if="subSlide >= 2">Use protoc to generate source client and server source code stubs</li>
                 <li v-if="subSlide >= 3">Implement server stubs</li>
                 <li v-if="subSlide >= 4">Profit</li>
