@@ -1,0 +1,20 @@
+{
+  "name": "code-generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "codegen.ts",
+  "scripts": {
+    "codegen": "node -r ts-node/register ./codegen.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^12.12.14",
+    "@types/rimraf": "^2.0.3",
+    "file": "^0.2.2",
+    "rimraf": "^3.0.0",
+    "ts-node": "^8.5.4",
+    "typescript": "^3.7.3"
+  },
+  "dependencies": {}
+}
