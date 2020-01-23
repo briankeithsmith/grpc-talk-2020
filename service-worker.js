@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/grpc-talk-2020/precache-manifest.14cedb0a1ad2eb71722c1496c8b0d4e5.js"
+  "/grpc-talk-2020/precache-manifest.9cd13475f47cca887f26ad793cf9bffb.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "presentation-client"});
