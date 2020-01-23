@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+
+package presentation;
+
+import "google/protobuf/empty.proto";
+
+message PresentationUpdate {
+    string SlideName = 1;
+    string SubSlide = 2;
+}
+
+message ChatMessage {
+    string User = 1;
+    string Message = 2;
+    int64 Timestamp = 3;
+    string MessageId = 4;
+}
+
+message ChatMessageResponse {
+    bool Error = 1;
+    string ErrorMessage = 2;
+    ChatMessage Message = 3;
+}
+
+message ActivePresentationResponse {
+    bool Error = 1;
+    bool IsActive = 2;
+}
+
+message StartPresentationRequest {
+    string Password = 1;
+}
+message StartPresentationResponse {
+    bool Error = 1;
+}
+message PostChatMessageResponse {
+    bool Error = 1;
+    string ErrorMessage = 2;
+    string MessageId = 3;
+}
+
+service Presentation {
+    rpc ActivePresentation (google.protobuf.Empty) returns (ActivePresentationResponse);
+    rpc StartPresentation (StartPresentationRequest) returns (StartPresentationResponse);
+    rpc JoinPresentation (google.protobuf.Empty) returns (stream PresentationUpdate);
+    rpc GetChatMessages (google.protobuf.Empty) returns (stream ChatMessageResponse);
+    rpc PostChatMessage (ChatMessage) returns (PostChatMessageResponse);
+}

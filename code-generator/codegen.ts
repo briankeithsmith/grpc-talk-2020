@@ -69,7 +69,8 @@ function transformToGo(inputPath: string) {
   return cp.spawnSync(
       'protoc', [
       `--proto_path=${sourceRoot}`,
-      `--go_out=import_style=commonjs:${goOutputPath}`,
+      //`--go_out=import_style=commonjs:${goOutputPath}`,
+      `--go_out=plugins=grpc:${goOutputPath}`,
       inputPath
     ], {cwd: sourceRoot}
   );  
