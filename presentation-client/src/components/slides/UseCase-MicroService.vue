@@ -48,7 +48,7 @@ const stepDefinitions = [
   `Recommendations service responds to Search service with a batch of recommendations, 0.7 (s) of the time budget has elapsed`,
   `Search service calls to Comments service with 0.8 (s) deadline to get top comments for results`,
   `Comments service responds in 0.3 (s) Search service is now only waiting on Adds service`,
-  `With 0.5 (s) remaining Serach service can now request another batch of recommendation with a 0.5 (s) deadline`,
+  `With 0.5 (s) remaining Search service can now request another batch of recommendation with a 0.5 (s) deadline`,
   `Recommendations repeats previous process and makes requests to Reservations and Users services`,
   `After 0.1 (s) the Adds service responds with the adds to be included leaving 0.4 (s) left in the original time budget`,
   `Search service decides to cancel the call to Recommendations service and return early to user, cancellation is propogated to users and reservations`,
