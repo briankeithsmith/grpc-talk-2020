@@ -123,7 +123,7 @@
             <div class="content">
               <ul>
                 <li v-if="subSlide >= tabStart(4,0)">Deadlines</li>
-                <li v-if="subSlide >= tabStart(4,1)">cancellation Propogation</li>
+                <li v-if="subSlide >= tabStart(4,1)">Cancellation Propogation</li>
                 <li v-if="subSlide >= tabStart(4,2)">Request Compression</li>
                 <li v-if="subSlide >= tabStart(4,3)">TLS / SSL</li>
                 <li v-if="subSlide >= tabStart(4,4)">Synchronous &amp; Asynchronous</li>
