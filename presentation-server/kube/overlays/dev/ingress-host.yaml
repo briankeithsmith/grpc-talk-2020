@@ -1,0 +1,10 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: presentation-server
+spec:
+  rules:
+  - host: dev-api.v2tools.com
+  tls:
+  - hosts:
+    - dev-api.v2tools.com

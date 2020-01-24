@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: presentation-redis
+spec:
+  selector:
+    matchLabels:
+      app: presentation-server
+      component: redis
+  template:
+    metadata:
+      labels:
+        app: presentation-server
+        component: redis
+    spec:
+      containers:
+      - name: redis
+        image: redis
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "125m"
+        ports:
+        - containerPort: 6379
+          hostPort: 6379

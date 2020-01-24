@@ -1,0 +1,9 @@
+commonLabels:
+  app: presentation-server
+
+resources:
+- redis.deployment.yaml
+- redis.service.yaml
+- presentation-server.deployment.yaml
+- presentation-server.service.yaml
+- presentation-server.ingress.yaml

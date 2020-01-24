@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: presentation-server
+spec:
+  selector:
+    matchLabels:
+      app: presentation-server
+  template:
+    metadata:
+      labels:
+        app: presentation-server
+    spec:
+      containers:
+      - name: presentation-server
+        image: presentation-server
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "125m"
+        env:
+          - name: REDIS_HOST
+            value: redis
+        ports:
+        - containerPort: 50000
+          name: grpc
+        - containerPort: 50002
+          name: grpc-web

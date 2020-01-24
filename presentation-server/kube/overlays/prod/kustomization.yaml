@@ -1,0 +1,11 @@
+resources:
+- ../../base
+
+namespace: prod
+
+patchesStrategicMerge:
+  - ingress-host.yaml
+
+images:
+  - name: presentation-server
+    newTag: '1'
