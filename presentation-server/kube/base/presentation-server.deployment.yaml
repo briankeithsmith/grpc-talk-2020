@@ -20,7 +20,9 @@ spec:
             cpu: "125m"
         env:
           - name: REDIS_HOST
-            value: redis
+            value: "redis"
+          - name: REDIS_PORT
+            value: "6379"
         ports:
         - containerPort: 50000
           name: grpc
