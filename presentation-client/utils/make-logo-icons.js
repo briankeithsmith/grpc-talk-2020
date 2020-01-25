@@ -2,7 +2,7 @@ var path = require('path');
 var fs = require('fs');
 var resizeImg = require('resize-img');
 
-const originalFilePath = path.resolve(__dirname, '..', 'src', 'assets', 'slides', 'logo_transparent-crop.png');
+const originalFilePath = path.resolve(__dirname, '..', 'src', 'assets', 'slides', 'grpc-pancakes.jpeg');
 const outputIconsFolder = path.resolve(__dirname, '..', 'public', 'img', 'icons');
 
 
