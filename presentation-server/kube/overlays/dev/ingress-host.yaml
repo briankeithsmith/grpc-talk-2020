@@ -5,6 +5,6 @@ metadata:
 spec:
   rules:
   - host: dev-api.v2tools.com
-  tls:
-  - hosts:
-    - dev-api.v2tools.com
+  # tls:
+  # - hosts:
+  #   - dev-api.v2tools.com

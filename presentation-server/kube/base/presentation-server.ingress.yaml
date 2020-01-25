@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   annotations:
     nginx.ingress.kubernetes.io/enable-cors: "true"
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    #nginx.ingress.kubernetes.io/ssl-redirect: "true"
   name: presentation-server
 spec:
   rules:
@@ -14,7 +14,7 @@ spec:
           serviceName: presentation-server
           servicePort: grpc-web
         path: /presentation/
-  tls:
-  - hosts:
-    - api.v2tools.com
-    secretName: ingress-nginx/star-v2tools
+  # tls:
+  # - hosts:
+  #   - api.v2tools.com
+  #   secretName: ingress-nginx/star-v2tools

@@ -7,7 +7,8 @@ import "google/protobuf/empty.proto";
 
 message PresentationUpdate {
     string SlideName = 1;
-    string SubSlide = 2;
+    int32 SubSlide = 2;
+    bool IsActive = 3;
 }
 
 message ChatMessage {
@@ -25,13 +26,16 @@ message ChatMessageResponse {
 
 message ActivePresentationResponse {
     bool Error = 1;
-    bool IsActive = 2;
+    PresentationUpdate Current = 2;
 }
 
-message StartPresentationRequest {
+message UpdatePresentationRequest {
     string Password = 1;
+    bool IsActive = 2;
+    string SlideName = 3;
+    int32 SubSlide = 4;
 }
-message StartPresentationResponse {
+message UpdatePresentationResponse {
     bool Error = 1;
 }
 message PostChatMessageResponse {
@@ -41,8 +45,8 @@ message PostChatMessageResponse {
 }
 
 service Presentation {
-    rpc ActivePresentation (google.protobuf.Empty) returns (ActivePresentationResponse);
-    rpc StartPresentation (StartPresentationRequest) returns (StartPresentationResponse);
+    rpc GetPresentation (google.protobuf.Empty) returns (ActivePresentationResponse);
+    rpc UpsertPresentation (UpdatePresentationRequest) returns (UpdatePresentationResponse);
     rpc JoinPresentation (google.protobuf.Empty) returns (stream PresentationUpdate);
     rpc GetChatMessages (google.protobuf.Empty) returns (stream ChatMessageResponse);
     rpc PostChatMessage (ChatMessage) returns (PostChatMessageResponse);
