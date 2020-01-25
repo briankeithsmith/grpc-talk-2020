@@ -18,13 +18,13 @@
         </b-navbar-dropdown>
       </template>
 
-      <template slot="end">
+      <!-- <template slot="end">
         <b-navbar-item tag="div">
           <div class="buttons">
             <a class="button is-light">Join Presentation</a>
           </div>
         </b-navbar-item>
-      </template>
+      </template> -->
     </b-navbar>
     <router-view></router-view>
   </section>

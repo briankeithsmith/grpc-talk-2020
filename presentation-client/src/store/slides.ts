@@ -1,12 +1,23 @@
 import { createModule } from "direct-vuex"
 import { moduleActionContext } from "./index"
 import { AllSlides, TitleConfig } from '@/components/slides/grpc/SlideConfigs';
+import * as google_protobuf_empty_pb from 'google-protobuf/google/protobuf/empty_pb';
+
+export interface LoadingError<T> {
+    value: T;
+    error: boolean;
+    loading: boolean;
+}
 
 export interface SlideState {
     currentSlide: SlideConfig;
     currentSubSlide: number;
     currentSlideOrder: number;
     maxSlides: number;
+
+    presentationActive: LoadingError<boolean>;
+    isPresenting: boolean;
+    isFollowing: boolean;
 }
 
 export interface SlideConfig {
@@ -22,6 +33,13 @@ const slides = createModule({
             currentSubSlide: 0,
             currentSlideOrder: 0,
             maxSlides: AllSlides.length - 1,
+            presentationActive: {
+                loading: false,
+                error: false,
+                value: false
+            },
+            isPresenting: false,
+            isFollowing: false,
         }
     },
     getters: {
@@ -100,6 +118,15 @@ const slides = createModule({
                 return AllSlides.find(x => x.name === name);
             }
         },
+        presentationActive(state) {
+            return state.presentationActive;
+        },
+        isPresenting(state) {
+            return state.isPresenting;
+        },
+        isFollowing(state) {
+            return state.isFollowing;
+        },
     },
     mutations: {
         SET_CurrentSlide(state, slide: SlideConfig) {
@@ -110,16 +137,38 @@ const slides = createModule({
         },
         SET_CurrentSubSlide(state, subSlide: number) {
             state.currentSubSlide = subSlide;
-        }
+        },
+        SET_IsPresenting(state, value: boolean) {
+            state.isPresenting = value;
+        },
+        SET_PresentationActive(state, payload: { value?: boolean, loading?: boolean, error?: boolean }) {
+            if (payload.value !== undefined) {
+                state.presentationActive.loading = false;
+                state.presentationActive.error = false;
+                state.presentationActive.value = payload.value;
+            } else if (payload.loading !== undefined) {
+                state.presentationActive.loading = payload.loading;
+                if (state.presentationActive.loading) {
+                    state.presentationActive.error = false;
+                }
+            } else if (payload.error !== undefined) {
+                state.presentationActive.error = payload.error;
+                if (state.presentationActive.error) {
+                    state.presentationActive.loading = false;
+                }
+            } else {
+                // This is a validation error
+            }
+        },
     },
     actions: {
-        async navigateSubSlide(ctx, payload: {forward?: boolean, value?: number}): Promise<false | string> {
-            if (payload.forward !== undefined && payload.value !== undefined){
+        async navigateSubSlide(ctx, payload: { forward?: boolean, value?: number }): Promise<false | string> {
+            if (payload.forward !== undefined && payload.value !== undefined) {
                 return false;
             }
             const context = slidesActionContext(ctx);
             const currentSubSlide = context.state.currentSubSlide;
-            
+
             if (payload.forward !== undefined) {
                 if (!payload.forward && context.state.currentSubSlide >= 0 && !context.getters.canNavigateBackwards) {
                     return false;
@@ -136,10 +185,10 @@ const slides = createModule({
             }
 
             if (nextSubSlide > context.state.currentSlide.maxSubSlides) {
-                return context.dispatch.navigateOne({forward: true});
+                return context.dispatch.navigateOne({ forward: true });
             }
             if (nextSubSlide < 0) {
-                return context.dispatch.navigateOne({forward: false, subSlideEnd: true});
+                return context.dispatch.navigateOne({ forward: false, subSlideEnd: true });
             }
 
             if (context.state.currentSubSlide === nextSubSlide) {
@@ -148,8 +197,7 @@ const slides = createModule({
             context.commit.SET_CurrentSubSlide(nextSubSlide);
             return context.getters.currentSlideRoute;
         },
-
-        navigateOne(ctx, payload: {forward: boolean, subSlideEnd?: boolean}): false | string {
+        navigateOne(ctx, payload: { forward: boolean, subSlideEnd?: boolean }): false | string {
             const context = slidesActionContext(ctx);
             const currentSlide = context.state.currentSlideOrder;
 
@@ -174,7 +222,7 @@ const slides = createModule({
             context.commit.SET_CurrentSubSlide(payload.subSlideEnd ? slideConfig.maxSubSlides : 0);
             return context.getters.currentSlideRoute;
         },
-        initializeOnSlide(ctx, payload: { slide: string, subSlide: number}) {
+        initializeOnSlide(ctx, payload: { slide: string, subSlide: number }) {
             const context = slidesActionContext(ctx);
             let slideConfig = context.getters.slideConfig(payload.slide);
             if (!slideConfig) {
@@ -188,7 +236,31 @@ const slides = createModule({
             if (context.state.currentSubSlide !== payload.subSlide) {
                 context.commit.SET_CurrentSubSlide(payload.subSlide);
             }
-        }
+        },
+        async getIsLoading(ctx): Promise<void> {
+            const context = slidesActionContext(ctx);
+            if (context.state.presentationActive.loading) {
+                return;
+            }
+
+            try {
+                context.state.presentationActive.loading = true;
+
+                const api = await import(/* webpackChunkName: "api" */ "@/api/presentation_grpc_web_pb");
+                const presentationClient = new api.PresentationPromiseClient("/presentations/");
+                const empty = new google_protobuf_empty_pb.Empty();
+                const response = await presentationClient.activePresentation(empty, {
+                    'deadline': '3000'
+                });
+
+                context.state.presentationActive.error = response.getError();
+                context.state.presentationActive.value = response.getIsactive();
+            } catch {
+                context.state.presentationActive.error = true;
+            } finally {
+                context.state.presentationActive.loading = false;
+            }
+        },
     },
 })
 

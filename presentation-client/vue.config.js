@@ -56,6 +56,17 @@ module.exports = {
             openAnalyzer: false
         }
     },
+    devServer: {
+        overlay: {
+            warnings: true,
+            errors: true
+        },
+        proxy: {
+            '^/presentations/': {
+                target: 'http://localhost:50002'
+            }
+        }
+    },
     configureWebpack: (config) => {
         config.plugins.push(new PrerenderSPAPlugin({
             // Required - The path to the webpack-outputted app to prerender.

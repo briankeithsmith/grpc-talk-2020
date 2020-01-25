@@ -31,6 +31,9 @@
             </a>
           </div>
         </div>
+        <div class="" v-if="presentationActive.value">
+          <a class="button is-light">Join Presentation</a>
+        </div>
       </div>
     </div>
   </section>
@@ -46,7 +49,7 @@ import { faEnvelope } from "@fortawesome/free-solid-svg-icons/faEnvelope";
 import { faGlobe } from "@fortawesome/free-solid-svg-icons/faGlobe";
 import { faGithub } from "@fortawesome/free-brands-svg-icons/faGithub";
 import { faLinkedin } from '@fortawesome/free-brands-svg-icons/faLinkedin';
-
+import store from '@/store';
 
 
 library.add(faGithub);
@@ -62,6 +65,14 @@ library.add(faLinkedin);
 })
 export default class TitleSlide extends Vue {
   @Prop({required: false, type: Number, default: 0}) public subSlide!: number;
+
+  public get presentationActive() {
+    return store.getters.slides.presentationActive;
+  }
+
+  public mounted() {
+    store.dispatch.slides.getIsLoading();
+  }
 }
 </script>
 
