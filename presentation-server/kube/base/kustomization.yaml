@@ -2,7 +2,6 @@ commonLabels:
   app: presentation-server
 
 resources:
-- namespace.yaml
 - redis.deployment.yaml
 - redis.service.yaml
 - presentation-server.deployment.yaml

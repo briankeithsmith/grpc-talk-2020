@@ -5,6 +5,12 @@ metadata:
 spec:
   rules:
   - host: api.v2tools.com
-  tls:
-  - hosts:
-    - api.v2tools.com
+    http:
+      paths:
+      - path: /presentations/
+        backend:
+          serviceName: presentation-server
+          servicePort: grpc-web
+  # tls:
+  # - hosts:
+  #   - api.v2tools.com

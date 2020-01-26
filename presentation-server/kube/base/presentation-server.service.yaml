@@ -5,6 +5,7 @@ metadata:
 spec:
   selector:
     app: presentation-server
+    component: server
   ports:
   - name: grpc
     port: 50000
