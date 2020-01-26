@@ -19,7 +19,7 @@ interface LoadingErrorWithMessage<T> extends LoadingError<T> {
 }
 
 type ThenArg<T> = T extends PromiseLike<infer U> ? U : never;
-type PresClient = import("/home/avaden/code/v2tools/grpc-talk-2020/presentation-client/src/api/index").PresentationPromiseClient;
+type PresClient = import("@/api").PresentationPromiseClient;
 
 export interface SlideState {
     currentSlide: SlideConfig;

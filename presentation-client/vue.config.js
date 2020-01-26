@@ -63,7 +63,7 @@ module.exports = {
         },
         proxy: {
             '^/presentations/api/': {
-                target: 'http://dev-api.v2tools.com'
+                target: 'https://dev.apps.v2tools.com'
             }
         }
     },
