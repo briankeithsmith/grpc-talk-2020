@@ -1,23 +1,41 @@
 import { createModule } from "direct-vuex"
 import { moduleActionContext } from "./index"
 import { AllSlides, TitleConfig } from '@/components/slides/grpc/SlideConfigs';
-import * as google_protobuf_empty_pb from 'google-protobuf/google/protobuf/empty_pb';
+import * as asyncLibs from '@/async-libs';
 
-export interface LoadingError<T> {
+export interface LoadingErrorBase {
+    error: boolean;
+    loading: boolean;
+}
+
+export interface LoadingError<T> extends LoadingErrorBase {
     value: T;
     error: boolean;
     loading: boolean;
 }
 
+interface LoadingErrorWithMessage<T> extends LoadingError<T> {
+    errorMessage: string;
+}
+
+type ThenArg<T> = T extends PromiseLike<infer U> ? U : never;
+type PresClient = import("/home/avaden/code/v2tools/grpc-talk-2020/presentation-client/src/api/index").PresentationPromiseClient;
+
 export interface SlideState {
     currentSlide: SlideConfig;
     currentSubSlide: number;
     currentSlideOrder: number;
+    password: string;
     maxSlides: number;
 
     presentationActive: LoadingError<boolean>;
     isPresenting: boolean;
-    isFollowing: boolean;
+    isFollowing: LoadingError<boolean>;
+    startingPresentation: LoadingErrorWithMessage<boolean>;
+
+    client: PresClient | undefined;
+    clientPromise: Promise<PresClient> | undefined;
+    leaveCallback: (() => void) | undefined;
 }
 
 export interface SlideConfig {
@@ -33,13 +51,27 @@ const slides = createModule({
             currentSubSlide: 0,
             currentSlideOrder: 0,
             maxSlides: AllSlides.length - 1,
+            password: '',
             presentationActive: {
                 loading: false,
                 error: false,
                 value: false
             },
             isPresenting: false,
-            isFollowing: false,
+            isFollowing: {
+                value: false,
+                loading: false,
+                error: false
+            },
+            startingPresentation: {
+                loading: false,
+                error: false,
+                errorMessage: '',
+                value: false,
+            },
+            clientPromise: undefined,
+            client: undefined,
+            leaveCallback: undefined,
         }
     },
     getters: {
@@ -127,6 +159,25 @@ const slides = createModule({
         isFollowing(state) {
             return state.isFollowing;
         },
+        presentationClient(state) {
+            if (state.client) {
+                return Promise.resolve(state.client);
+            }
+            if (state.clientPromise) {
+                return state.clientPromise;
+            }
+
+            state.clientPromise = new Promise<PresClient>(async (resolve, reject) => {
+                try {
+                    const api = await asyncLibs.api();
+                    const client = new api.PresentationPromiseClient("/presentations/api");
+                    resolve(client);
+                } catch (e) {
+                    reject(e);
+                }
+            });
+            return state.clientPromise;
+        }
     },
     mutations: {
         SET_CurrentSlide(state, slide: SlideConfig) {
@@ -140,6 +191,31 @@ const slides = createModule({
         },
         SET_IsPresenting(state, value: boolean) {
             state.isPresenting = value;
+            if (state.isPresenting) {
+                state.isFollowing.value = false;
+            }
+        },
+        SET_IsFollowing(state, payload: { value?: boolean, loading?: boolean, error?: boolean }) {
+            if (payload.value !== undefined) {
+                state.isFollowing.loading = false;
+                state.isFollowing.error = false;
+                state.isFollowing.value = payload.value;
+                if (state.isFollowing.value) {
+                    state.isPresenting = false;
+                }
+            } else if (payload.loading !== undefined) {
+                state.isFollowing.loading = payload.loading;
+                if (state.isFollowing.loading) {
+                    state.isFollowing.error = false;
+                }
+            } else if (payload.error !== undefined) {
+                state.isFollowing.error = payload.error;
+                if (state.isFollowing.error) {
+                    state.isFollowing.loading = false;
+                }
+            } else {
+                // This is a validation error
+            }
         },
         SET_PresentationActive(state, payload: { value?: boolean, loading?: boolean, error?: boolean }) {
             if (payload.value !== undefined) {
@@ -195,6 +271,9 @@ const slides = createModule({
                 return false;
             }
             context.commit.SET_CurrentSubSlide(nextSubSlide);
+            if (context.state.isPresenting) {
+                context.dispatch.updateServer();
+            }
             return context.getters.currentSlideRoute;
         },
         navigateOne(ctx, payload: { forward: boolean, subSlideEnd?: boolean }): false | string {
@@ -220,6 +299,9 @@ const slides = createModule({
             const slideOrder = context.getters.slideOrder(slideConfig.name);
             context.commit.SET_CurrentSlideOrder(slideOrder);
             context.commit.SET_CurrentSubSlide(payload.subSlideEnd ? slideConfig.maxSubSlides : 0);
+            if (context.state.isPresenting) {
+                context.dispatch.updateServer();
+            }
             return context.getters.currentSlideRoute;
         },
         initializeOnSlide(ctx, payload: { slide: string, subSlide: number }) {
@@ -237,7 +319,7 @@ const slides = createModule({
                 context.commit.SET_CurrentSubSlide(payload.subSlide);
             }
         },
-        async getIsLoading(ctx): Promise<void> {
+        async checkForActive(ctx): Promise<void> {
             const context = slidesActionContext(ctx);
             if (context.state.presentationActive.loading) {
                 return;
@@ -246,21 +328,122 @@ const slides = createModule({
             try {
                 context.state.presentationActive.loading = true;
 
-                const api = await import(/* webpackChunkName: "api" */ "@/api/presentation_grpc_web_pb");
-                const presentationClient = new api.PresentationPromiseClient("/presentations/");
-                const empty = new google_protobuf_empty_pb.Empty();
-                const response = await presentationClient.activePresentation(empty, {
-                    'deadline': '3000'
-                });
+                const presentationClient = await context.getters.presentationClient;
+                const api = await asyncLibs.api();
+                const empty = new api.Empty();
+                const response = await presentationClient.getPresentation(empty, api.WithDeadline(3));
 
                 context.state.presentationActive.error = response.getError();
-                context.state.presentationActive.value = response.getIsactive();
+                const currentPresentation = response.getCurrent();
+                if (currentPresentation) {
+                    context.state.presentationActive.value = currentPresentation.getIsactive();
+                } else {
+                    context.state.presentationActive.value = false;
+                }
             } catch {
                 context.state.presentationActive.error = true;
             } finally {
                 context.state.presentationActive.loading = false;
             }
         },
+        async startPresenting(ctx, payload: { password: string }): Promise<boolean> {
+            const context = slidesActionContext(ctx);
+
+            try {
+                context.state.password = payload.password;
+                context.commit.SET_IsPresenting(true);
+                const response = await context.dispatch.updateServer();
+                if (!response) {
+                    context.commit.SET_IsPresenting(false);
+                    return false;
+                }
+                return true;
+            } catch (e) {
+                context.state.startingPresentation.error = true;
+                context.state.startingPresentation.errorMessage = typeof (e) === 'string' ? e : 'Error while calling api';
+                context.commit.SET_IsPresenting(false);
+                return false;
+            } finally {
+                context.state.startingPresentation.loading = false;
+            }
+        },
+        stopPresentation(ctx): Promise<boolean> {
+            const context = slidesActionContext(ctx);
+            context.commit.SET_IsPresenting(false);
+            return context.dispatch.updateServer();
+        },
+        async updateServer(ctx): Promise<boolean> {
+            const context = slidesActionContext(ctx);
+            try {
+                const api = await asyncLibs.api();
+                const client = await context.getters.presentationClient;
+                const request = new api.UpdatePresentationRequest();
+                request.setIsactive(context.state.isPresenting);
+                request.setPassword(context.state.password);
+                request.setSlidename(context.state.currentSlide.name);
+                request.setSubslide(context.state.currentSubSlide);
+
+                const response = await client.upsertPresentation(request, api.WithDeadline(1));
+                return !response.getError();
+            } catch (e) {
+                return false;
+            }
+        },
+        async joinPresentation(ctx) {
+            const context = slidesActionContext(ctx);
+            try {
+
+                context.commit.SET_IsFollowing({loading: true});
+                const client = await context.getters.presentationClient;
+                const api = await asyncLibs.api();
+                const presentationStream = await client.joinPresentation(new api.Empty());
+
+                let allowUpdate = true;
+                presentationStream.on('error', (error) => {
+                    if (!allowUpdate) {
+                        return;
+                    }
+                    setTimeout(() => {
+                        context.dispatch.joinPresentation();
+                    }, 1500);
+                    context.commit.SET_IsFollowing({value: false});
+                });
+                presentationStream.on('data', (update) => {
+                    if (!allowUpdate) {
+                        return;
+                    }
+
+                    context.commit.SET_IsFollowing({value: true});
+                    context.commit.SET_IsFollowing({loading: false});
+
+                    context.dispatch.initializeOnSlide({
+                        slide: update.getSlidename(),
+                        subSlide: update.getSubslide()
+                    });
+                });
+                presentationStream.on('end', () => {
+                    if (!allowUpdate) {
+                        return;
+                    }
+                    context.commit.SET_IsFollowing({value: false});
+                });
+                context.state.leaveCallback = () => {
+                    allowUpdate = false;
+                    context.commit.SET_IsFollowing({value: false});
+                    context.state.leaveCallback = undefined;
+                    presentationStream.cancel();
+                }
+
+            } catch {
+                context.commit.SET_IsFollowing({error: true});
+            }
+        },
+        async leavePresentation(ctx) {
+            const context = slidesActionContext(ctx);
+            if (context.state.leaveCallback) {
+                context.state.leaveCallback();
+            }
+        }
     },
 })
 

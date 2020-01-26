@@ -6,70 +6,62 @@
       </transition>
     </div>
 
-    <!-- <div v-if="showSartPresenting" class="slide-slide-number">
+    <div v-if="showSartPresenting" class="slide-slide-number">
       <b-button
+        v-if="!isPresenting"
         tag="button"
         @click.prevent="startPresentingModalActive = true;"
         type="is-link"
-        :disabled="isPresenting"
       >Present</b-button>
-    </div> -->
+    </div>
 
     <div v-if="showControls" class="slide-nav-button-container">
       <b-button
-        v-if="!isFollowing.value"
         tag="a"
         :href="previousSlideRoute"
         @click.prevent="navigateClicked(false)"
-        @click.right.prevent="startPresentingModalActive = true;"
         :disabled="!canNavigateBackward"
         type="is-link"
       >
         <font-awesome-icon icon="angle-double-left" size="lg" />
       </b-button>
       <b-button
-        v-if="!isFollowing.value"
         tag="a"
         :href="previousSubSlideRoute"
         @click.prevent="navigateSubClicked(false)"
-        @click.right.prevent="startPresentingModalActive = true;"
         :disabled="!canNavigateSubBackward"
         type="is-link"
       >
         <font-awesome-icon icon="angle-left" size="lg" />
       </b-button>
       <b-button
-        v-if="!isFollowing.value"
         tag="a"
         :href="nextSubSlideRoute"
         @click.prevent="navigateSubClicked(true)"
-        @click.right.prevent="startPresentingModalActive = true;"
         :disabled="!canNavigateSubForward"
         type="is-link"
       >
         <font-awesome-icon icon="angle-right" size="lg" />
       </b-button>
       <b-button
-        v-if="!isFollowing.value"
         tag="a"
         :href="nextSlideRoute"
         @click.prevent="navigateClicked(true)"
-        @click.right.prevent="startPresentingModalActive = true;"
         :disabled="!canNavigateForward"
         type="is-link"
       >
         <font-awesome-icon icon="angle-double-right" size="lg" />
       </b-button>
-    </div>
 
-    <b-modal :active.sync="startPresentingModalActive" trap-focus aria-role="dialog" aria-modal>
-      <StartPresentingForm
-        @submit="startPresentingSubmitted($event)"
-        :loading="startingPresentation.loading"
-        :error="startingPresentation.error"
-        :errorMessage="startingPresentation.errorMessage"
-      ></StartPresentingForm>
-    </b-modal>
+      <b-modal :active.sync="startPresentingModalActive" trap-focus aria-role="dialog" aria-modal>
+        <StartPresentingForm
+          @submit="startPresentingSubmitted($event)"
+          :loading="startingPresentation.loading"
+          :error="startingPresentation.error"
+          :errorMessage="startingPresentation.errorMessage"
+        ></StartPresentingForm>
+      </b-modal>
+    </div>
   </div>
 </template>
 
@@ -115,6 +107,9 @@ export default class PresentationContainer extends VueClass {
     return store.state.slides.startingPresentation;
   }
 
+  public get isPresenting() {
+    return store.getters.slides.isPresenting;
+  }
   public get slide() {
     const name = store.getters.slides.currentSlide.name;
     // const component = (Vue as any).options.components['slide-'+name];
@@ -149,12 +144,6 @@ export default class PresentationContainer extends VueClass {
   }
   public get canNavigateSubBackward(): boolean {
     return store.getters.slides.canNavigateSubBackwards;
-  }
-  public get isFollowing() {
-    return store.getters.slides.isFollowing;
-  }
-  public get isPresenting() {
-    return store.getters.slides.isPresenting;
   }
   public async slideClicked(event: MouseEvent) {
     const elementX = event.x;

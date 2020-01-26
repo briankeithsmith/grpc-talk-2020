@@ -7,7 +7,7 @@ spec:
   - host: dev-api.v2tools.com
     http:
       paths:
-      - path: /presentations/
+      - path: /presentations/api/(.*)
         backend:
           serviceName: presentation-server
           servicePort: grpc-web

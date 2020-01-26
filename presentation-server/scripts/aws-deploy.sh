@@ -4,6 +4,7 @@ set -e
 
 
 version=$(git rev-parse --short HEAD)
+version="test5"
 env=$1
 
 echo "Deploying version $version and deploying to environment $env"

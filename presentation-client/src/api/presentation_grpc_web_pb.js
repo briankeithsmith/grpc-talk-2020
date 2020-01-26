@@ -94,8 +94,8 @@ proto.presentation.PresentationPromiseClient =
  *   !proto.google.protobuf.Empty,
  *   !proto.presentation.ActivePresentationResponse>}
  */
-const methodDescriptor_Presentation_ActivePresentation = new grpc.web.MethodDescriptor(
-  '/presentation.Presentation/ActivePresentation',
+const methodDescriptor_Presentation_GetPresentation = new grpc.web.MethodDescriptor(
+  '/presentation.Presentation/GetPresentation',
   grpc.web.MethodType.UNARY,
   google_protobuf_empty_pb.Empty,
   proto.presentation.ActivePresentationResponse,
@@ -113,7 +113,7 @@ const methodDescriptor_Presentation_ActivePresentation = new grpc.web.MethodDesc
  *   !proto.google.protobuf.Empty,
  *   !proto.presentation.ActivePresentationResponse>}
  */
-const methodInfo_Presentation_ActivePresentation = new grpc.web.AbstractClientBase.MethodInfo(
+const methodInfo_Presentation_GetPresentation = new grpc.web.AbstractClientBase.MethodInfo(
   proto.presentation.ActivePresentationResponse,
   /** @param {!proto.google.protobuf.Empty} request */
   function(request) {
@@ -133,13 +133,13 @@ const methodInfo_Presentation_ActivePresentation = new grpc.web.AbstractClientBa
  * @return {!grpc.web.ClientReadableStream<!proto.presentation.ActivePresentationResponse>|undefined}
  *     The XHR Node Readable Stream
  */
-proto.presentation.PresentationClient.prototype.activePresentation =
+proto.presentation.PresentationClient.prototype.getPresentation =
     function(request, metadata, callback) {
   return this.client_.rpcCall(this.hostname_ +
-      '/presentation.Presentation/ActivePresentation',
+      '/presentation.Presentation/GetPresentation',
       request,
       metadata || {},
-      methodDescriptor_Presentation_ActivePresentation,
+      methodDescriptor_Presentation_GetPresentation,
       callback);
 };
 
@@ -152,87 +152,87 @@ proto.presentation.PresentationClient.prototype.activePresentation =
  * @return {!Promise<!proto.presentation.ActivePresentationResponse>}
  *     A native promise that resolves to the response
  */
-proto.presentation.PresentationPromiseClient.prototype.activePresentation =
+proto.presentation.PresentationPromiseClient.prototype.getPresentation =
     function(request, metadata) {
   return this.client_.unaryCall(this.hostname_ +
-      '/presentation.Presentation/ActivePresentation',
+      '/presentation.Presentation/GetPresentation',
       request,
       metadata || {},
-      methodDescriptor_Presentation_ActivePresentation);
+      methodDescriptor_Presentation_GetPresentation);
 };
 
 
 /**
  * @const
  * @type {!grpc.web.MethodDescriptor<
- *   !proto.presentation.StartPresentationRequest,
- *   !proto.presentation.StartPresentationResponse>}
+ *   !proto.presentation.UpdatePresentationRequest,
+ *   !proto.presentation.UpdatePresentationResponse>}
  */
-const methodDescriptor_Presentation_StartPresentation = new grpc.web.MethodDescriptor(
-  '/presentation.Presentation/StartPresentation',
+const methodDescriptor_Presentation_UpsertPresentation = new grpc.web.MethodDescriptor(
+  '/presentation.Presentation/UpsertPresentation',
   grpc.web.MethodType.UNARY,
-  proto.presentation.StartPresentationRequest,
-  proto.presentation.StartPresentationResponse,
-  /** @param {!proto.presentation.StartPresentationRequest} request */
+  proto.presentation.UpdatePresentationRequest,
+  proto.presentation.UpdatePresentationResponse,
+  /** @param {!proto.presentation.UpdatePresentationRequest} request */
   function(request) {
     return request.serializeBinary();
   },
-  proto.presentation.StartPresentationResponse.deserializeBinary
+  proto.presentation.UpdatePresentationResponse.deserializeBinary
 );
 
 
 /**
  * @const
  * @type {!grpc.web.AbstractClientBase.MethodInfo<
- *   !proto.presentation.StartPresentationRequest,
- *   !proto.presentation.StartPresentationResponse>}
+ *   !proto.presentation.UpdatePresentationRequest,
+ *   !proto.presentation.UpdatePresentationResponse>}
  */
-const methodInfo_Presentation_StartPresentation = new grpc.web.AbstractClientBase.MethodInfo(
-  proto.presentation.StartPresentationResponse,
-  /** @param {!proto.presentation.StartPresentationRequest} request */
+const methodInfo_Presentation_UpsertPresentation = new grpc.web.AbstractClientBase.MethodInfo(
+  proto.presentation.UpdatePresentationResponse,
+  /** @param {!proto.presentation.UpdatePresentationRequest} request */
   function(request) {
     return request.serializeBinary();
   },
-  proto.presentation.StartPresentationResponse.deserializeBinary
+  proto.presentation.UpdatePresentationResponse.deserializeBinary
 );
 
 
 /**
- * @param {!proto.presentation.StartPresentationRequest} request The
+ * @param {!proto.presentation.UpdatePresentationRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @param {function(?grpc.web.Error, ?proto.presentation.StartPresentationResponse)}
+ * @param {function(?grpc.web.Error, ?proto.presentation.UpdatePresentationResponse)}
  *     callback The callback function(error, response)
- * @return {!grpc.web.ClientReadableStream<!proto.presentation.StartPresentationResponse>|undefined}
+ * @return {!grpc.web.ClientReadableStream<!proto.presentation.UpdatePresentationResponse>|undefined}
  *     The XHR Node Readable Stream
  */
-proto.presentation.PresentationClient.prototype.startPresentation =
+proto.presentation.PresentationClient.prototype.upsertPresentation =
     function(request, metadata, callback) {
   return this.client_.rpcCall(this.hostname_ +
-      '/presentation.Presentation/StartPresentation',
+      '/presentation.Presentation/UpsertPresentation',
       request,
       metadata || {},
-      methodDescriptor_Presentation_StartPresentation,
+      methodDescriptor_Presentation_UpsertPresentation,
       callback);
 };
 
 
 /**
- * @param {!proto.presentation.StartPresentationRequest} request The
+ * @param {!proto.presentation.UpdatePresentationRequest} request The
  *     request proto
  * @param {?Object<string, string>} metadata User defined
  *     call metadata
- * @return {!Promise<!proto.presentation.StartPresentationResponse>}
+ * @return {!Promise<!proto.presentation.UpdatePresentationResponse>}
  *     A native promise that resolves to the response
  */
-proto.presentation.PresentationPromiseClient.prototype.startPresentation =
+proto.presentation.PresentationPromiseClient.prototype.upsertPresentation =
     function(request, metadata) {
   return this.client_.unaryCall(this.hostname_ +
-      '/presentation.Presentation/StartPresentation',
+      '/presentation.Presentation/UpsertPresentation',
       request,
       metadata || {},
-      methodDescriptor_Presentation_StartPresentation);
+      methodDescriptor_Presentation_UpsertPresentation);
 };
 
 

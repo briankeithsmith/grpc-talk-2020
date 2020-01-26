@@ -6,8 +6,11 @@ export class PresentationUpdate extends jspb.Message {
   getSlidename(): string;
   setSlidename(value: string): void;
 
-  getSubslide(): string;
-  setSubslide(value: string): void;
+  getSubslide(): number;
+  setSubslide(value: number): void;
+
+  getIsactive(): boolean;
+  setIsactive(value: boolean): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): PresentationUpdate.AsObject;
@@ -20,7 +23,8 @@ export class PresentationUpdate extends jspb.Message {
 export namespace PresentationUpdate {
   export type AsObject = {
     slidename: string,
-    subslide: string,
+    subslide: number,
+    isactive: boolean,
   }
 }
 
@@ -86,8 +90,10 @@ export class ActivePresentationResponse extends jspb.Message {
   getError(): boolean;
   setError(value: boolean): void;
 
-  getIsactive(): boolean;
-  setIsactive(value: boolean): void;
+  getCurrent(): PresentationUpdate | undefined;
+  setCurrent(value?: PresentationUpdate): void;
+  hasCurrent(): boolean;
+  clearCurrent(): void;
 
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): ActivePresentationResponse.AsObject;
@@ -100,41 +106,53 @@ export class ActivePresentationResponse extends jspb.Message {
 export namespace ActivePresentationResponse {
   export type AsObject = {
     error: boolean,
-    isactive: boolean,
+    current?: PresentationUpdate.AsObject,
   }
 }
 
-export class StartPresentationRequest extends jspb.Message {
+export class UpdatePresentationRequest extends jspb.Message {
   getPassword(): string;
   setPassword(value: string): void;
 
+  getIsactive(): boolean;
+  setIsactive(value: boolean): void;
+
+  getSlidename(): string;
+  setSlidename(value: string): void;
+
+  getSubslide(): number;
+  setSubslide(value: number): void;
+
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): StartPresentationRequest.AsObject;
-  static toObject(includeInstance: boolean, msg: StartPresentationRequest): StartPresentationRequest.AsObject;
-  static serializeBinaryToWriter(message: StartPresentationRequest, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): StartPresentationRequest;
-  static deserializeBinaryFromReader(message: StartPresentationRequest, reader: jspb.BinaryReader): StartPresentationRequest;
+  toObject(includeInstance?: boolean): UpdatePresentationRequest.AsObject;
+  static toObject(includeInstance: boolean, msg: UpdatePresentationRequest): UpdatePresentationRequest.AsObject;
+  static serializeBinaryToWriter(message: UpdatePresentationRequest, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): UpdatePresentationRequest;
+  static deserializeBinaryFromReader(message: UpdatePresentationRequest, reader: jspb.BinaryReader): UpdatePresentationRequest;
 }
 
-export namespace StartPresentationRequest {
+export namespace UpdatePresentationRequest {
   export type AsObject = {
     password: string,
+    isactive: boolean,
+    slidename: string,
+    subslide: number,
   }
 }
 
-export class StartPresentationResponse extends jspb.Message {
+export class UpdatePresentationResponse extends jspb.Message {
   getError(): boolean;
   setError(value: boolean): void;
 
   serializeBinary(): Uint8Array;
-  toObject(includeInstance?: boolean): StartPresentationResponse.AsObject;
-  static toObject(includeInstance: boolean, msg: StartPresentationResponse): StartPresentationResponse.AsObject;
-  static serializeBinaryToWriter(message: StartPresentationResponse, writer: jspb.BinaryWriter): void;
-  static deserializeBinary(bytes: Uint8Array): StartPresentationResponse;
-  static deserializeBinaryFromReader(message: StartPresentationResponse, reader: jspb.BinaryReader): StartPresentationResponse;
+  toObject(includeInstance?: boolean): UpdatePresentationResponse.AsObject;
+  static toObject(includeInstance: boolean, msg: UpdatePresentationResponse): UpdatePresentationResponse.AsObject;
+  static serializeBinaryToWriter(message: UpdatePresentationResponse, writer: jspb.BinaryWriter): void;
+  static deserializeBinary(bytes: Uint8Array): UpdatePresentationResponse;
+  static deserializeBinaryFromReader(message: UpdatePresentationResponse, reader: jspb.BinaryReader): UpdatePresentationResponse;
 }
 
-export namespace StartPresentationResponse {
+export namespace UpdatePresentationResponse {
   export type AsObject = {
     error: boolean,
   }

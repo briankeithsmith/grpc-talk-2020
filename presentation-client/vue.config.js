@@ -62,28 +62,30 @@ module.exports = {
             errors: true
         },
         proxy: {
-            '^/presentations/': {
-                target: 'http://localhost:50002'
+            '^/presentations/api/': {
+                target: 'http://dev-api.v2tools.com'
             }
         }
     },
     configureWebpack: (config) => {
-        config.plugins.push(new PrerenderSPAPlugin({
-            // Required - The path to the webpack-outputted app to prerender.
-            staticDir: path.join(__dirname, 'dist'),
-            // Required - Routes to render.
-            routes: [
-                '/',
-                '/demo',
-                ...slideRoutes,
-            ],
-        }));
+        if (process.env.NODE_ENV === 'prod') {
+            config.plugins.push(new PrerenderSPAPlugin({
+                // Required - The path to the webpack-outputted app to prerender.
+                staticDir: path.join(__dirname, 'dist'),
+                // Required - Routes to render.
+                routes: [
+                    '/',
+                    '/demo',
+                    ...slideRoutes,
+                ],
+            }));
+        }
     },
     publicPath: '/grpc-talk-2020/',
     pwa: {
         name: 'GRPC Presentation',
         themeColor: '#2DA6B0',
-        msTileColor: '#000000',
+        msTileColor: '#FFFFFF',
         appleMobileWebAppCapable: 'yes',
         appleMobileWebAppStatusBarStyle: 'black',
         manifestOptions: {

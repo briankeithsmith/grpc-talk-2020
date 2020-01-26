@@ -1,5 +1,5 @@
 <template>
-    <title-slide></title-slide>
+    <title-slide :showJoin="false"></title-slide>
 </template>
 
 <script>

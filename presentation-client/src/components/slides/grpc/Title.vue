@@ -6,7 +6,11 @@
         <h4 class="subtitle">Intro to next generation inter-service communication protocol</h4>
         <div class="level section">
           <div class="buttons level-item">
-            <b-button tag="a" href="https://www.linkedin.com/in/adam-vaden-4a77057b/" target="_blank">Adam Vaden</b-button>
+            <b-button
+              tag="a"
+              href="https://www.linkedin.com/in/adam-vaden-4a77057b/"
+              target="_blank"
+            >Adam Vaden</b-button>
             <a href="https://github.com/abvaden" class="button">
               <span class="icon">
                 <font-awesome-icon :icon="['fab','github']" size="lg"></font-awesome-icon>
@@ -31,13 +35,9 @@
             </a>
           </div>
         </div>
-        <div class="" v-if="presentationActive.value">
-          <a class="button is-light">Join Presentation</a>
-        </div>
       </div>
     </div>
   </section>
-
 </template>
 
 <script lang="ts">
@@ -48,15 +48,13 @@ import { library } from "@fortawesome/fontawesome-svg-core";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons/faEnvelope";
 import { faGlobe } from "@fortawesome/free-solid-svg-icons/faGlobe";
 import { faGithub } from "@fortawesome/free-brands-svg-icons/faGithub";
-import { faLinkedin } from '@fortawesome/free-brands-svg-icons/faLinkedin';
-import store from '@/store';
-
+import { faLinkedin } from "@fortawesome/free-brands-svg-icons/faLinkedin";
+import store from "@/store";
 
 library.add(faGithub);
 library.add(faGlobe);
 library.add(faEnvelope);
 library.add(faLinkedin);
-
 
 @Component({
   components: {
@@ -64,15 +62,7 @@ library.add(faLinkedin);
   }
 })
 export default class TitleSlide extends Vue {
-  @Prop({required: false, type: Number, default: 0}) public subSlide!: number;
-
-  public get presentationActive() {
-    return store.getters.slides.presentationActive;
-  }
-
-  public mounted() {
-    store.dispatch.slides.getIsLoading();
-  }
+  @Prop({ required: false, type: Number, default: 0 }) public subSlide!: number;
 }
 </script>
 

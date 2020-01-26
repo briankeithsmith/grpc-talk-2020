@@ -8,27 +8,27 @@ import {
   ChatMessageResponse,
   PostChatMessageResponse,
   PresentationUpdate,
-  StartPresentationRequest,
-  StartPresentationResponse} from './presentation_pb';
+  UpdatePresentationRequest,
+  UpdatePresentationResponse} from './presentation_pb';
 
 export class PresentationClient {
   constructor (hostname: string,
                credentials?: null | { [index: string]: string; },
                options?: null | { [index: string]: string; });
 
-  activePresentation(
+  getPresentation(
     request: google_protobuf_empty_pb.Empty,
     metadata: grpcWeb.Metadata | undefined,
     callback: (err: grpcWeb.Error,
                response: ActivePresentationResponse) => void
   ): grpcWeb.ClientReadableStream<ActivePresentationResponse>;
 
-  startPresentation(
-    request: StartPresentationRequest,
+  upsertPresentation(
+    request: UpdatePresentationRequest,
     metadata: grpcWeb.Metadata | undefined,
     callback: (err: grpcWeb.Error,
-               response: StartPresentationResponse) => void
-  ): grpcWeb.ClientReadableStream<StartPresentationResponse>;
+               response: UpdatePresentationResponse) => void
+  ): grpcWeb.ClientReadableStream<UpdatePresentationResponse>;
 
   joinPresentation(
     request: google_protobuf_empty_pb.Empty,
@@ -54,15 +54,15 @@ export class PresentationPromiseClient {
                credentials?: null | { [index: string]: string; },
                options?: null | { [index: string]: string; });
 
-  activePresentation(
+  getPresentation(
     request: google_protobuf_empty_pb.Empty,
     metadata?: grpcWeb.Metadata
   ): Promise<ActivePresentationResponse>;
 
-  startPresentation(
-    request: StartPresentationRequest,
+  upsertPresentation(
+    request: UpdatePresentationRequest,
     metadata?: grpcWeb.Metadata
-  ): Promise<StartPresentationResponse>;
+  ): Promise<UpdatePresentationResponse>;
 
   joinPresentation(
     request: google_protobuf_empty_pb.Empty,
