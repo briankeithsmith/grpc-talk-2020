@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package voting.models;
 
+option go_package = "voting";
+
 message Vote {
     string UserId = 1;
     string UserCode = 2;

@@ -1,6 +1,7 @@
 syntax = "proto3";
 
 package voting.users;
+option go_package = "voting";
 
 message User {
     string Name = 1;

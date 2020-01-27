@@ -3,6 +3,8 @@ syntax = "proto3";
 package voting.summary;
 import "models.proto";
 
+option go_package = "voting";
+
 message PollOptionSummary {
     voting.models.Option Option = 1;
     int32 VoteCounts = 2;
