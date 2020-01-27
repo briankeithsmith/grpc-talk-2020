@@ -6,8 +6,6 @@ import (
 	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/google/uuid"
 	log "github.com/sirupsen/logrus"
-	"google.golang.org/grpc/codes"
-	"google.golang.org/grpc/status"
 	"v2tools.com/presentations/demos/grpc/record-server/voting"
 )
 
@@ -114,5 +112,32 @@ func (server *RecordServer) RecordVote(ctx context.Context, req *voting.Vote) (*
 
 // StreamRecords ..
 func (server *RecordServer) StreamRecords(req *voting.StreamRecordsRequest, srv voting.RecordingService_StreamRecordsServer) error {
-	return status.Errorf(codes.Unimplemented, "method StreamRecords not implemented")
+	quit := make(chan bool, 2)
+	defer func() { quit <- true }()
+	handleMessage, err := server.pubSub.SubscribeVotes(quit)
+	if err != nil {
+
+	}
+	for {
+		select {
+		case votingRecord := <-handleMessage:
+			if srv.Context().Err() != nil {
+				break
+			}
+			err := srv.Send(&votingRecord)
+			if err != nil {
+				log.WithError(err).Info("Error while sending voting record to client")
+			}
+			break
+		case <-srv.Context().Done():
+			quit <- true
+			log.WithError(err).Info("Client gracefully disconnecting from presentation")
+		}
+
+		if srv.Context().Err() != nil {
+			break
+		}
+	}
+
+	return nil
 }
