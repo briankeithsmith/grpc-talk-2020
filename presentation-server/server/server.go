@@ -88,13 +88,32 @@ func (server *PresentationServer) JoinPresentation(req *empty.Empty, srv present
 		return nil
 	}
 
+	delay := func(out chan<- interface{}) {
+		go func() {
+			time.Sleep(time.Second * 10)
+			out <- nil
+		}()
+	}
+	ping := make(chan interface{})
 	done := make(chan interface{})
 	defer close(done)
 	out, err := server.pubSub.SubscribePresentation(done)
+	delay(ping)
 	for {
 		select {
 		case <-srv.Context().Done():
 			return nil
+		case <-ping:
+			err := srv.Send(&presentation.PresentationUpdate{
+				IsPing: true,
+			})
+
+			if err != nil {
+				log.WithError(err).Warn("Error while sending message to client")
+				return nil
+			}
+
+			delay(ping)
 		case presentationUpdate, more := <-out:
 			if !more {
 				return nil
