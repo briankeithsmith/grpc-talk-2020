@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name:  envoy
+  labels:
+    component: envoy
+spec:
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        component: envoy
+    spec:
+      containers:
+        - image:  envoyproxy/envoy:v1.9.1
+          imagePullPolicy: IfNotPresent
+          name: envoy
+          command: ["/usr/local/bin/envoy", "-c", "/etc/envoy/envoy.yaml", "-l", "trace", "--log-path", "/tmp/envoy_info.log"]
+          volumeMounts:
+            - mountPath: /etc/envoy/
+              name: envoy-config
+          ports:
+            - containerPort:  9999
+              name:  health
+            - containerPort: 8100
+              name: data
+      volumes:
+        - name: envoy-config
+          configMap: 
+            name: envoy-config
+            defaultMode: 0444
+      restartPolicy: Always

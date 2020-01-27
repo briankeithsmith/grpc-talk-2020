@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package voting.record;
+
+import "google/protobuf/empty.proto";
+import "models.proto";
+
+message VotingRecord {
+    string Id = 1;
+    int64 Sequence = 2;
+}
+
+message RecordVoteResponse {
+    bool Error = 1;
+    bool ErrorMessage = 2;
+}
+
+message StreamRecordsRequest {
+    int64 StartSequence = 1;
+}
+
+service RecordingService {
+    rpc GetPolls(google.protobuf.Empty) returns (voting.models.Poll);
+    rpc RecordVote(voting.models.Vote) returns (RecordVoteResponse);
+    rpc StreamRecords (StreamRecordsRequest) returns (stream voting.models.Poll);
+}

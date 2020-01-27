@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package voting.users;
+
+message User {
+    string Name = 1;
+    string Code = 2;
+    bool IsAdmin = 3;
+}
+
+message UserRequest {
+    string Name = 1;
+}
+
+message CreateUserResponse {
+    bool Error = 1;
+    string ErrorMessage = 2;
+    User User = 3;
+}
+
+message UserResponse {
+    bool Error = 1;
+    bool Value = 2;
+}
+
+service Users {
+    rpc CreateUser (UserRequest) returns (CreateUserResponse);
+    rpc UserExists (UserRequest) returns (UserResponse);
+    rpc ValidateUser (User) returns (UserResponse);
+}

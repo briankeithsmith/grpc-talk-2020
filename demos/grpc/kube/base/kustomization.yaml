@@ -1,0 +1,8 @@
+commonLabels:
+  app: demo-grpc
+
+
+resources:
+- envoy.deployment.yaml
+- envoy.service.yaml
+- envoy.configmap.yaml

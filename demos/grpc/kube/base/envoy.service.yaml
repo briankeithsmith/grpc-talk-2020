@@ -1,0 +1,18 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name:  envoy
+spec:
+  selector:
+    app: envoy
+  type: ClusterIP
+  ports:
+    - name:  health
+      port: 80
+      targetPort:  health
+    - name: data
+      port: 8100
+      targetPort: data
+    - name: admin
+      port: 9999
+      targetPort: 9999

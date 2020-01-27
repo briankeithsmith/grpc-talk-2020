@@ -1,0 +1,8 @@
+commonLabels:
+  app: demo-grpc
+  service: users
+
+resources:
+- users-server.deployment.yaml
+- users-server.service.yaml
+- users-server.ingress.yaml

@@ -1,0 +1,22 @@
+{
+  "name": "user-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@grpc/proto-loader": "^0.5.3",
+    "grpc": "^1.24.2",
+    "redis": "^2.8.0"
+  },
+  "devDependencies": {
+    "@types/node": "^13.5.0",
+    "@types/redis": "^2.8.14",
+    "typescript": "^3.7.5"
+  }
+}

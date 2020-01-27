@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-grpc-users
+spec:
+  selector:
+    matchLabels:
+      app: demo-grpc-users
+  template:
+    metadata:
+      labels:
+        app: demo-grpc-users
+        component: server
+    spec:
+      containers:
+      - name: demo-grpc-users
+        image: demo-grpc-users
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "125m"
+        env:
+          - name: REDIS_HOST
+            value: "redis"
+          - name: REDIS_PORT
+            value: "6379"
+        ports:
+        - containerPort: 5000
+          name: grpc
