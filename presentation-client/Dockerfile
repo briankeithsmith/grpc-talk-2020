@@ -9,12 +9,13 @@ COPY . .
 RUN npm run build
 
 
-FROM node:13.7.0-alpine3.10
+FROM node:13.7.0-alpine3.10 as deploy
 COPY server/ /app/server/
-COPY server/ /app/dist/
+
 
 WORKDIR /app/server
 RUN npm ci
+COPY --from=build /app/dist/ /app/dist/
 
 WORKDIR /app/
 CMD node /app/server/index.js
