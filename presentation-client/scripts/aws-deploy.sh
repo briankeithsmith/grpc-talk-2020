@@ -4,7 +4,6 @@ set -e
 
 
 version=$(git rev-parse --short HEAD)
-#version="test5"
 env=$1
 
 echo "Deploying version $version and deploying to environment $env"
@@ -16,12 +15,12 @@ rootFolder=$(dirname $sourceDir)
 
 
 
-containerName="abvaden/presentation-server:$version"
+containerName="abvaden/presentation-static-files:$version"
 echo "Building image $containerName"
 
-docker build -t $containerName "$sourceDir/server"
+docker build -t $containerName "$sourceDir"
 docker push $containerName
 
 cd "$sourceDir/kube/overlays/$env"
-kustomize edit set image presentation-server=$containerName
+kustomize edit set image presentation-static-files=$containerName
 kustomize build | kubectl apply -f -

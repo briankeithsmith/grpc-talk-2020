@@ -6,15 +6,6 @@
       </transition>
     </div>
 
-    <!-- <div v-if="showSartPresenting" class="slide-slide-number">
-      <b-button
-        tag="button"
-        @click.prevent="startPresentingModalActive = true;"
-        type="is-link"
-        :disabled="isPresenting"
-      >Present</b-button>
-    </div> -->
-
     <div v-if="showControls" class="slide-nav-button-container">
       <b-button
         v-if="!isFollowing.value"

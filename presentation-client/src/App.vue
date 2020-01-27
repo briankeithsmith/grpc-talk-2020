@@ -25,22 +25,29 @@
         <b-navbar-item tag="div" v-if="presentationActive">
           <div class="buttons">
             <template v-if="!isPresenting">
+              <template v-if="presentationActive">
               <button
-                v-if="!isFollowing.value"
+                v-if="!isFollowing.value && !presentationActive.loading"
                 class="button is-light"
+                :class="{'is-waring': presentationActive.error}"
+                :disabled="!presentationActive.value"
                 @click="joinPresentationClicked()"
               >Join Presentation</button>
-
               <button
                 v-if="isFollowing.value"
                 class="button is-light"
                 @click.prevent="stopFollowingClicked()"
               >Leave Presentation</button>
+              </template>
+              <template v-else>
+                
+              </template>
             </template>
             <template v-else>
               <button
                 class="button is-light"
                 disabled
+                v-if="isPresenting"
               >Presenting</button>
             </template>
           </div>
@@ -75,8 +82,9 @@ export default class App extends Vue {
 
   public async joinPresentationClicked() {
     store.dispatch.slides.joinPresentation();
-    await this.$router.push({ name: "slides" });
-    
+    if (this.$route.name !== 'slides') {
+      await this.$router.push({ name: 'slides' });
+    }
   }
 
   public stopFollowingClicked() {

@@ -1,0 +1,7 @@
+commonLabels:
+  app: presentation-static-files
+
+resources:
+- presentation-static-files.deployment.yaml
+- presentation-static-files.service.yaml
+- presentation-static-files.ingress.yaml

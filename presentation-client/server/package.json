@@ -1,0 +1,13 @@
+{
+  "name": "static-file-server",
+  "version": "0.0.0",
+  "dependencies": {
+    "@types/fastify-accepts": "^0.5.0",
+    "fastify": "^2.9.0",
+    "fastify-accepts": "^0.5.0",
+    "fastify-blipp": "^2.1.0",
+    "fastify-plugin": "^1.6.0",
+    "fastify-static": "^2.5.0"
+  },
+  "devDependencies": {}
+}

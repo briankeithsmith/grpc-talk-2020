@@ -63,7 +63,7 @@ module.exports = {
         },
         proxy: {
             '^/presentations/api/': {
-                target: 'https://dev.apps.v2tools.com'
+                target: 'https://apps.v2tools.com'
             }
         }
     },
@@ -81,7 +81,7 @@ module.exports = {
             }));
         }
     },
-    publicPath: '/grpc-talk-2020/',
+    publicPath: '/presentations/',
     pwa: {
         name: 'GRPC Presentation',
         themeColor: '#2DA6B0',

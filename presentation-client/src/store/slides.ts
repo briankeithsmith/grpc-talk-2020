@@ -325,6 +325,7 @@ const slides = createModule({
                 return;
             }
 
+            
             try {
                 context.state.presentationActive.loading = true;
 
@@ -332,7 +333,7 @@ const slides = createModule({
                 const api = await asyncLibs.api();
                 const empty = new api.Empty();
                 const response = await presentationClient.getPresentation(empty, api.WithDeadline(3));
-
+                
                 context.state.presentationActive.error = response.getError();
                 const currentPresentation = response.getCurrent();
                 if (currentPresentation) {
@@ -343,6 +344,7 @@ const slides = createModule({
             } catch {
                 context.state.presentationActive.error = true;
             } finally {
+                
                 context.state.presentationActive.loading = false;
             }
         },

@@ -3,21 +3,18 @@ kind: Ingress
 metadata:
   annotations:
     kubernetes.io/ingress.class: "nginx"
-    nginx.ingress.kubernetes.io/enable-cors: "true"
-    nginx.ingress.kubernetes.io/enable-rewrite-log: "true"
-    nginx.ingress.kubernetes.io/rewrite-target: /$1
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
-  name: presentation-server
+  name: presentation-static-files
 spec:
   rules:
   - host: apps.v2tools.com
     http:
       paths:
-      - path: /presentations/api/(.*)
+      - path: /presentations/
         backend:
-          serviceName: presentation-server
-          servicePort: grpc-web
+          serviceName: presentation-static-files
+          servicePort: http
         
   tls:
   - hosts:

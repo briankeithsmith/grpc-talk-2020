@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: presentation-static-files
+spec:
+  selector:
+    matchLabels:
+      app: presentation-static-files
+  template:
+    metadata:
+      labels:
+        app: presentation-static-files
+        component: server
+    spec:
+      containers:
+      - name: presentation-static-files
+        image: presentation-static-files
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "125m"
+        ports:
+        - containerPort: 8080
+          name: http
