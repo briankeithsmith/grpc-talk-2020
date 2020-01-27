@@ -9,6 +9,7 @@ message PresentationUpdate {
     string SlideName = 1;
     int32 SubSlide = 2;
     bool IsActive = 3;
+    bool IsPing = 4;
 }
 
 message ChatMessage {

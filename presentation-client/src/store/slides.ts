@@ -418,6 +418,10 @@ const slides = createModule({
                     context.commit.SET_IsFollowing({value: true});
                     context.commit.SET_IsFollowing({loading: false});
 
+                    if (update.getIsping()) {
+                        return;
+                    }
+                    
                     context.dispatch.initializeOnSlide({
                         slide: update.getSlidename(),
                         subSlide: update.getSubslide()

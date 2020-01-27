@@ -202,7 +202,8 @@ proto.presentation.PresentationUpdate.toObject = function(includeInstance, msg) 
   var f, obj = {
     slidename: jspb.Message.getFieldWithDefault(msg, 1, ""),
     subslide: jspb.Message.getFieldWithDefault(msg, 2, 0),
-    isactive: jspb.Message.getBooleanFieldWithDefault(msg, 3, false)
+    isactive: jspb.Message.getBooleanFieldWithDefault(msg, 3, false),
+    isping: jspb.Message.getBooleanFieldWithDefault(msg, 4, false)
   };
 
   if (includeInstance) {
@@ -251,6 +252,10 @@ proto.presentation.PresentationUpdate.deserializeBinaryFromReader = function(msg
       var value = /** @type {boolean} */ (reader.readBool());
       msg.setIsactive(value);
       break;
+    case 4:
+      var value = /** @type {boolean} */ (reader.readBool());
+      msg.setIsping(value);
+      break;
     default:
       reader.skipField();
       break;
@@ -298,6 +303,13 @@ proto.presentation.PresentationUpdate.serializeBinaryToWriter = function(message
   if (f) {
     writer.writeBool(
       3,
+      f
+    );
+  }
+  f = message.getIsping();
+  if (f) {
+    writer.writeBool(
+      4,
       f
     );
   }
@@ -355,6 +367,24 @@ proto.presentation.PresentationUpdate.prototype.getIsactive = function() {
  */
 proto.presentation.PresentationUpdate.prototype.setIsactive = function(value) {
   return jspb.Message.setProto3BooleanField(this, 3, value);
+};
+
+
+/**
+ * optional bool IsPing = 4;
+ * @return {boolean}
+ */
+proto.presentation.PresentationUpdate.prototype.getIsping = function() {
+  return /** @type {boolean} */ (jspb.Message.getBooleanFieldWithDefault(this, 4, false));
+};
+
+
+/**
+ * @param {boolean} value
+ * @return {!proto.presentation.PresentationUpdate} returns this
+ */
+proto.presentation.PresentationUpdate.prototype.setIsping = function(value) {
+  return jspb.Message.setProto3BooleanField(this, 4, value);
 };
 
 

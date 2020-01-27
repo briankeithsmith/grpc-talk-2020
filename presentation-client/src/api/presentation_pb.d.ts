@@ -12,6 +12,9 @@ export class PresentationUpdate extends jspb.Message {
   getIsactive(): boolean;
   setIsactive(value: boolean): void;
 
+  getIsping(): boolean;
+  setIsping(value: boolean): void;
+
   serializeBinary(): Uint8Array;
   toObject(includeInstance?: boolean): PresentationUpdate.AsObject;
   static toObject(includeInstance: boolean, msg: PresentationUpdate): PresentationUpdate.AsObject;
@@ -25,6 +28,7 @@ export namespace PresentationUpdate {
     slidename: string,
     subslide: number,
     isactive: boolean,
+    isping: boolean,
   }
 }
 
