@@ -10,7 +10,7 @@
           <li v-if="subSlide >= 3">Web
               <ul>
                   <li v-if="subSlide >= 4">Missing Bid Streaming</li>
-                  <li v-if="subSlide >= 5">Bulky Client Libraries <a href="/presentations/modern-report.html">sample</a></li>
+                  <li v-if="subSlide >= 5">Bulky Client Libraries <a href="/presentations/modern-report.html" target="_blank">sample</a></li>
                   <li v-if="subSlide >= 6">Can Require Extra Infrastructure</li>
               </ul>
           </li>

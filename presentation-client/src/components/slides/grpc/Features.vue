@@ -28,119 +28,126 @@
       </ul>
     </div>
 
-      <transition name="fade" mode="out-in">
-        <div v-if="isTab(1)" key="code-generation" class="container">
-          <a
-            v-if="subSlide >= tabStart(1)"
-            class="is-size-4"
-            href="https://github.com/protocolbuffers/protobuf/releases"
-            target="_blank"
-          >Protoc (.proto)</a>
+    <transition name="fade" mode="out-in">
+      <div v-if="isTab(1)" key="code-generation" class="container">
+        <a
+          v-if="subSlide >= tabStart(1)"
+          class="is-size-4"
+          href="https://github.com/protocolbuffers/protobuf/releases"
+          target="_blank"
+        >Protoc (.proto)</a>
+        <div class="content">
+          <ul>
+            <li v-if="subSlide >= tabStart(1, 1)">Generate code through cli or api</li>
+            <li v-if="subSlide >= tabStart(1, 2)">Optional standard library</li>
+            <li v-if="subSlide >= tabStart(1, 3)">Composable</li>
+          </ul>
+        </div>
+      </div>
+
+      <div v-if="isTab(2)" class="content" key="streaming">
+        <h4 class="has-text-centered">4 Different RPC Options</h4>
+        <div class="columns is-vcentered is-desktop">
+          <div class="column is-4">
+            <ol>
+              <li v-if="subSlide >= tabStart(2, 1)">
+                <span
+                  class="is-size-6"
+                  :class="{'has-text-primary': subSlide == tabStart(2,1)}"
+                >Unary</span>
+              </li>
+              <li v-if="subSlide >= tabStart(2, 2)">
+                <span
+                  class="is-size-6"
+                  :class="{'has-text-primary': subSlide == tabStart(2,2)}"
+                >Server Streaming</span>
+              </li>
+              <li v-if="subSlide >= tabStart(2, 3)">
+                <span
+                  class="is-size-6"
+                  :class="{'has-text-primary': subSlide == tabStart(2,3)}"
+                >Client Streaming</span>
+              </li>
+              <li v-if="subSlide >= tabStart(2, 4)">
+                <span
+                  class="is-size-6"
+                  :class="{'has-text-primary': subSlide == tabStart(2,4)}"
+                >Bidirectional</span>
+              </li>
+            </ol>
+          </div>
+          <div class="column">
+            <highlight-code
+              class="my-code"
+              v-if="subSlide >= tabStart(2, 1)"
+              :code="sourceCode"
+              lang="protobuf"
+            ></highlight-code>
+          </div>
+        </div>
+      </div>
+
+      <div v-if="isTab(3)" key="load-balancing">
+        <section>
+          <div class="container has-text-centered">
+            <a
+              class="is-size-4 has-text-link"
+              href="https://github.com/grpc/grpc/blob/master/doc/load-balancing.md"
+              target="_blank"
+            >Documentation</a>
+          </div>
+        </section>
+        <section>
+          <div class="columns">
+            <div class="column">
+              <div class="content">
+                <ul>
+                  <li v-if="subSlide >= tabStart(3,1)">Proxy Based</li>
+                  <li v-if="subSlide >= tabStart(3,2)">Thick Client</li>
+                  <li
+                    v-if="subSlide >= tabStart(3,3)"
+                    class="has-text-weight-bold"
+                  >Lookaside / External</li>
+                </ul>
+              </div>
+            </div>
+            <div class="column">
+              <img v-if="subSlide === tabStart(3,3)" src="@/assets/slides/load-balancing.png" />
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <div v-if="isTab(4)" key="...">
+        <div class="container">
           <div class="content">
             <ul>
-              <li v-if="subSlide >= tabStart(1, 1)">Generate code through cli or api</li>
-              <li v-if="subSlide >= tabStart(1, 2)">Optional standard library</li>
-              <li v-if="subSlide >= tabStart(1, 3)">Composable</li>
+              <li v-if="subSlide >= tabStart(4,0)">Deadlines</li>
+              <li v-if="subSlide >= tabStart(4,1)">Cancellation Propogation</li>
+              <li v-if="subSlide >= tabStart(4,2)">Request Compression</li>
+              <li v-if="subSlide >= tabStart(4,3)">TLS / SSL</li>
+              <li v-if="subSlide >= tabStart(4,4)">Synchronous &amp; Asynchronous</li>
+              <li v-if="subSlide >= tabStart(4,5)">Observability</li>
+              <li v-if="subSlide >= tabStart(4,6)">
+                Mature Ecosystem -
+                <a
+                  href="https://github.com/grpc-ecosystem/awesome-grpc"
+                  target="_blank"
+                >Awesome GRPC</a>
+              </li>
+
+              <li v-if="subSlide >= tabStart(4,7)">
+                Runtime discoverability -
+                <a
+                  href="https://github.com/fullstorydev/grpcurl"
+                  target="_blank"
+                >grpCurl</a>
+              </li>
             </ul>
           </div>
         </div>
-
-        <div v-if="isTab(2)" class="content" key="streaming">
-          <h4 class="has-text-centered">4 Different RPC Options</h4>
-          <div class="columns is-vcentered is-desktop">
-            <div class="column is-4">
-              <ol>
-                <li v-if="subSlide >= tabStart(2, 1)">
-                  <span
-                    class="is-size-6"
-                    :class="{'has-text-primary': subSlide == tabStart(2,1)}"
-                  >Unary</span>
-                </li>
-                <li v-if="subSlide >= tabStart(2, 2)">
-                  <span
-                    class="is-size-6"
-                    :class="{'has-text-primary': subSlide == tabStart(2,2)}"
-                  >Server Streaming</span>
-                </li>
-                <li v-if="subSlide >= tabStart(2, 3)">
-                  <span
-                    class="is-size-6"
-                    :class="{'has-text-primary': subSlide == tabStart(2,3)}"
-                  >Client Streaming</span>
-                </li>
-                <li v-if="subSlide >= tabStart(2, 4)">
-                  <span
-                    class="is-size-6"
-                    :class="{'has-text-primary': subSlide == tabStart(2,4)}"
-                  >Bidirectional</span>
-                </li>
-              </ol>
-            </div>
-            <div class="column">
-              <highlight-code
-                class="my-code"
-                v-if="subSlide >= tabStart(2, 1)"
-                :code="sourceCode"
-                lang="protobuf"
-              ></highlight-code>
-            </div>
-          </div>
-        </div>
-
-        <div v-if="isTab(3)" key="load-balancing">
-          <section>
-            <div class="container has-text-centered">
-              <a
-                class="is-size-4 has-text-link"
-                href="https://github.com/grpc/grpc/blob/master/doc/load-balancing.md"
-                target="_blank"
-              >Documentation</a>
-            </div>
-          </section>
-          <section>
-            <div class="columns">
-              <div class="column">
-                <div class="content">
-                  <ul>
-                    <li v-if="subSlide >= tabStart(3,1)">Proxy Based</li>
-                    <li v-if="subSlide >= tabStart(3,2)">Thick Client</li>
-                    <li
-                      v-if="subSlide >= tabStart(3,3)"
-                      class="has-text-weight-bold"
-                    >Lookaside / External</li>
-                  </ul>
-                </div>
-              </div>
-              <div class="column">
-                <img v-if="subSlide === tabStart(3,3)" src="@/assets/slides/load-balancing.png" />
-              </div>
-            </div>
-          </section>
-        </div>
-
-        <div v-if="isTab(4)" key="...">
-          <div class="container">
-            <div class="content">
-              <ul>
-                <li v-if="subSlide >= tabStart(4,0)">Deadlines</li>
-                <li v-if="subSlide >= tabStart(4,1)">Cancellation Propogation</li>
-                <li v-if="subSlide >= tabStart(4,2)">Request Compression</li>
-                <li v-if="subSlide >= tabStart(4,3)">TLS / SSL</li>
-                <li v-if="subSlide >= tabStart(4,4)">Synchronous &amp; Asynchronous</li>
-                <li v-if="subSlide >= tabStart(4,5)">Observability</li>
-                <li v-if="subSlide >= tabStart(4,6)">Mature Ecosystem</li>
-                <li v-if="subSlide >= tabStart(4,7)">
-                  Runtime discoverability -
-                  <a
-                    href="https://github.com/fullstorydev/grpcurl"
-                    target="_blank"
-                  >grpCurl</a>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </transition>
+      </div>
+    </transition>
   </div>
 </template>
 

@@ -12,12 +12,15 @@
           :to="{name: 'slides', params: {'slide': 'Title', 'subSlide': 0}}"
         >Slides</b-navbar-item>
         <b-navbar-item tag="router-link" :to="{name: 'demo'}">Demo</b-navbar-item>
-        <b-navbar-dropdown label="Links">
-          <b-navbar-item href="https://grpc.io/docs/quickstart/">Quick Start</b-navbar-item>
+        <b-navbar-dropdown label="More Info">
+          <b-navbar-item href="https://grpc.io/docs/quickstart/">GRPC Quick Start</b-navbar-item>
           <b-navbar-item href="https://grpc.io/docs">Docs</b-navbar-item>
           <b-navbar-item
             href="https://developers.google.com/protocol-buffers/docs/proto3"
           >ProtoBuf Guide</b-navbar-item>
+          <b-navbar-item href="https://github.com/grpc-ecosystem/awesome-grpc">
+            Awesome GRPC
+          </b-navbar-item>
         </b-navbar-dropdown>
       </template>
 

@@ -21,12 +21,12 @@ export const UseCasesMicroService: SlideConfig = {
 };
 
 export const UseCasesVersioning: SlideConfig = {
-  maxSubSlides: 3,
+  maxSubSlides: 4,
   name: 'UseCase-Versioning'
 }
 
 export const TechnicalDetailsWorkflow: SlideConfig = {
-  maxSubSlides: 4,
+  maxSubSlides: 9,
   name: 'TechnicalDetails-Workflow'
 }
 
@@ -36,7 +36,7 @@ export const TechnicalDetailsWireFormat: SlideConfig = {
 };
 
 export const TechnicalDetailsLibraryStructure: SlideConfig = {
-  maxSubSlides: 4,
+  maxSubSlides: 2,
   name: 'TechnicalDetails-LibraryStructure'
 };
 

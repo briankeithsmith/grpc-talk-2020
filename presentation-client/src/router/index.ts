@@ -9,8 +9,8 @@ Vue.use(VueRouter)
 const routes: RouteConfig[] = [
   {
     path: '/',
-    component: Home,
-    name: 'home'
+    redirect: { name: 'slides-home'},
+    name: 'home',
   },
   {
     path: '*',

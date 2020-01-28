@@ -34,9 +34,9 @@
             >High Performance</p>
             <div class="content">
                 <ul>
-                <li><a @click.stop href="https://github.com/grpc/grpc/blob/master/doc/PROTOCOL-HTTP2.md">Minimal Wire Format</a></li>
-                <li><a @click.stop href="https://grpc.io/docs/guides/benchmarking/">Low Latency</a></li>
-                <li><a @click.stop href="https://grpc.io/docs/guides/benchmarking/">High Throughput</a></li>
+                <li><a @click.stop href="https://github.com/grpc/grpc/blob/master/doc/PROTOCOL-HTTP2.md" target="_blank">Minimal Wire Format</a></li>
+                <li><a @click.stop href="https://grpc.io/docs/guides/benchmarking/" target="_blank">Low Latency</a></li>
+                <li><a @click.stop href="https://grpc.io/docs/guides/benchmarking/" target="_blank">High Throughput</a></li>
                 </ul>
             </div>
           </div>

@@ -9,6 +9,7 @@ export const slides: RouteConfig[] = [{
         {
             path: '',
             redirect: '/slides/Title/0',
+            name: 'slides-home',
         },
         {
             path: '/slides/:slide/:subSlide',

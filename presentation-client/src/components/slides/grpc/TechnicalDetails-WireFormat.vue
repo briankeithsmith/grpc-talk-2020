@@ -9,7 +9,7 @@
       <section>
         <div class="content">
             <ol>
-                <li v-if="subSlide >= 1">Binary Format <a href="https://github.com/grpc/grpc/blob/master/doc/PROTOCOL-HTTP2.md">(ABNF)</a></li>
+                <li v-if="subSlide >= 1">Binary Format <a href="https://github.com/grpc/grpc/blob/master/doc/PROTOCOL-HTTP2.md" target="_blank">(ABNF)</a></li>
                 <li v-if="subSlide >= 2">HTTP 2.0 Framings</li>
                 <li v-if="subSlide >= 3">Optional message encodings</li>
                 <li v-if="subSlide >= 4">Optional Transports
