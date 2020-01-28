@@ -6,32 +6,29 @@
         <h4 class="subtitle">Intro to next generation inter-service communication protocol</h4>
         <div class="level section">
           <div class="buttons level-item">
-            <b-button
-              tag="a"
-              href="https://www.linkedin.com/in/adam-vaden-4a77057b/"
-              target="_blank"
-            >Adam Vaden</b-button>
-            <a href="https://github.com/abvaden" class="button">
+            <a type="text" href="mailto:adam@v2tools.com" class="button" target="_blank">
+              <span class="icon">
+                <font-awesome-icon icon="envelope"></font-awesome-icon>
+              </span>
+              <span>adam@V2Tools.com</span>
+            </a>
+            <a href="https://github.com/abvaden" class="button" target="_blank">
               <span class="icon">
                 <font-awesome-icon :icon="['fab','github']" size="lg"></font-awesome-icon>
               </span>
+              <span>@abvaden</span>
             </a>
             <a href="https://www.linkedin.com/in/adam-vaden-4a77057b/" class="button">
               <span class="icon">
                 <font-awesome-icon :icon="['fab', 'linkedin']"></font-awesome-icon>
               </span>
+              <span>Adam Vaden</span>
             </a>
-            <a type="text" href="mailto:adam@v2tools.com" class="button">
-              <span class="icon">
-                <font-awesome-icon icon="envelope"></font-awesome-icon>
-              </span>
-              <span>adam@V2tools.com</span>
-            </a>
-            <a href="https://v2tools.com" class="button">
+            <a href="https://v2tools.com" class="button" target="_blank">
               <span class="icon">
                 <font-awesome-icon icon="globe"></font-awesome-icon>
               </span>
-              <span>V2tools.com</span>
+              <span>V2Tools.com</span>
             </a>
           </div>
         </div>
