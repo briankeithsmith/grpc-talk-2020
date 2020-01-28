@@ -18,7 +18,12 @@ message PollSummary {
     repeated PollOptionSummary Options = 3;
 }
 
-service VotingSummaryService {
-    rpc GetPollSummary (voting.models.Poll) returns (PollSummary);
+message GetPollSummaryResponse {
+    bool Error = 1;
+    PollSummary Value = 2;
+}
+
+service PollSummaryService {
+    rpc GetPollSummary (voting.models.Poll) returns (GetPollSummaryResponse);
     rpc StreamPollSummary (voting.models.Poll) returns (stream PollSummary);
 }

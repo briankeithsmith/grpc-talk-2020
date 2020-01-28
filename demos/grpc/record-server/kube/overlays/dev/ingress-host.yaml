@@ -1,17 +1,17 @@
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: presentation-server
+  name: demo-grpc-record
 spec:
   rules:
-  - host: dev.apps.v2tools.com
+  - host: record.grpc.demo.dev.apps.v2tools.com
     http:
       paths:
-      - path: /presentations/api/(.*)
+      - path: /
         backend:
           serviceName: presentation-server
           servicePort: grpc-web
   tls:
   - hosts:
-    - dev.apps.v2tools.com
-    secretName: dev-apps-v2tools-crt
+    - record.grpc.demo.dev.apps.v2tools.com
+    secretName: record-grpc-demo-dev-apps-v2tools-crt

@@ -62,9 +62,13 @@ module.exports = {
             errors: true
         },
         proxy: {
+            // '^/presentations/api/': {
+            //     target: 'https://apps.v2tools.com'
+            // },
             '^/presentations/api/': {
-                target: 'https://apps.v2tools.com'
-            }
+                target: 'http://localhost:50002',
+                pathRewrite: {'^/presentations/api' : ''}
+            },
         }
     },
     configureWebpack: (config) => {

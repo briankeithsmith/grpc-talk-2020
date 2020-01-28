@@ -6,18 +6,18 @@ metadata:
     nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
-  name: demo-grpc-users
+  name: demo-grpc-poll-summary
 spec:
   rules:
-  - host: users.grpc.demo.apps.v2tools.com
+  - host: pollsummary.grpc.demo.apps.v2tools.com
     http:
       paths:
       - path: /
         backend:
-          serviceName: demo-grpc-users
+          serviceName: demo-grpc-poll-summary
           servicePort: grpc
         
   tls:
   - hosts:
-    - users.grpc.demo.apps.v2tools.com
-    secretName: users-grpc-demo-apps-v2tools-crt
+    - pollsummary.grpc.demo.apps.v2tools.com
+    secretName: poll-summary-grpc-demo-apps-v2tools-crt

@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name:  envoy
+  name:  demo-grpc-envoy
   labels:
     component: envoy
 spec:
@@ -13,6 +13,7 @@ spec:
   template:
     metadata:
       labels:
+        name: demo-grpc-envoy
         component: envoy
     spec:
       containers:
@@ -28,6 +29,10 @@ spec:
               name:  health
             - containerPort: 8100
               name: data
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "125m"
       volumes:
         - name: envoy-config
           configMap: 

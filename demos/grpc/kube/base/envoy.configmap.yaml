@@ -31,6 +31,11 @@ data:
                       cluster: users_service
                       prefix_rewrite: "/"
                       max_grpc_timeout: 0s
+                  - match: { prefix: "/presentations/demo/grpc/api/record" }
+                    route:
+                      cluster: record_service
+                      prefix_rewrite: "/"
+                      max_grpc_timeout: 0s
                   cors:
                     allow_origin:
                     - "*"
@@ -50,3 +55,9 @@ data:
         http2_protocol_options: {}
         lb_policy: round_robin
         hosts: [{ socket_address: { address: demo-grpc-users, port_value: 5000 }}]
+      - name: record_service
+        connect_timeout: 0.25s
+        type: logical_dns
+        http2_protocol_options: {}
+        lb_policy: round_robin
+        hosts: [{ socket_address: { address: demo-grpc-record, port_value: 50000 }}]

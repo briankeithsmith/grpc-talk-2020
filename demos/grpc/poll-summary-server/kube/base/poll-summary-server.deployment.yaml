@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-grpc-poll-summary-server
+spec:
+  selector:
+    matchLabels:
+      app: demo-grpc-poll-summary-server
+  template:
+    metadata:
+      labels:
+        app: demo-grpc-poll-summary-server
+        component: server
+    spec:
+      containers:
+      - name: poll-summary-server
+        image: poll-summary-server
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "125m"
+        env:
+          - name: REDIS_HOST
+            value: "redis"
+          - name: REDIS_PORT
+            value: "6379"
+          - name: "USERS_SERVICE_HOST"
+            value: "demo-grpc-users"
+          - name: "USERS_SERVICE_PORT"
+            value: "5000"
+          - name: "RECORD_SERVICE_HOST"
+            value: "demo-grpc-record"
+          - name: "RECORD_SERVICE_PORT"
+            value: "50000"
+        ports:
+        - containerPort: 50000
+          name: grpc

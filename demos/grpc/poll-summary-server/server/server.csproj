@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Protobuf Include="..\..\protos\models.proto" GrpcServices="Client" />
+    <Protobuf Include="..\..\protos\users.proto" GrpcServices="Client" />
+    <Protobuf Include="..\..\protos\record-service.proto" GrpcServices="Client" />
+    <Protobuf Include="..\..\protos\poll-summary.proto" GrpcServices="Server" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.24.0" />
+    <PackageReference Include="StackExchange.Redis" Version="2.0.601" />
+  </ItemGroup>
+
+</Project>

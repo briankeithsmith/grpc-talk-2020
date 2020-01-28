@@ -1,10 +1,10 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name:  envoy
+  name:  demo-grpc-envoy
 spec:
   selector:
-    app: envoy
+    app: demo-grpc-envoy
   type: ClusterIP
   ports:
     - name:  health

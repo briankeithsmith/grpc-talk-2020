@@ -15,12 +15,12 @@ rootFolder=$(dirname $sourceDir)
 
 
 
-containerName="abvaden/presentation-server:$version"
+containerName="abvaden/demo-grpc-poll-summary-server:$version"
 echo "Building image $containerName"
 
 docker build -t $containerName "$sourceDir/server"
 docker push $containerName
 
 cd "$sourceDir/kube/overlays/$env"
-kustomize edit set image presentation-server=$containerName
+kustomize edit set image poll-summary-server=$containerName
 kustomize build | kubectl apply -f -

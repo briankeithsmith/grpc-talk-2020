@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: demo-grpc-envoy
+spec:
+  rules:
+  - host: dev.apps.v2tools.com
+    http:
+      paths:
+      - path: /presentations/demo/grpc/api
+        backend:
+          serviceName: demo-grpc-envoy
+          servicePort: data
+        
+  tls:
+  - hosts:
+    - dev.apps.v2tools.com
+    secretName: dev-apps-v2tools-crt

@@ -35,7 +35,7 @@ func main() {
 	if usersServicePort == "" {
 		usersServicePort = "5000"
 	}
-	clientConnection, err := grpc.Dial(fmt.Sprintf("%s:%s", usersServiceHost, usersServicePort))
+	clientConnection, err := grpc.Dial(fmt.Sprintf("%s:%s", usersServiceHost, usersServicePort), grpc.WithInsecure())
 	if err != nil {
 		log.WithError(err).Panicf("Error while dialing the users service")
 	}

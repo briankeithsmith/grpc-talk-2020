@@ -1,9 +1,7 @@
 commonLabels:
-  app: presentation-server
+  app: demo-grpc-record-server
 
 resources:
-- redis.deployment.yaml
-- redis.service.yaml
-- presentation-server.deployment.yaml
-- presentation-server.service.yaml
-- presentation-server.ingress.yaml
+- record-server.deployment.yaml
+- record-server.service.yaml
+- record-server.ingress.yaml

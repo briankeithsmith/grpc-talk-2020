@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: presentation-server
+  name: demo-grpc-record-server
 spec:
   selector:
     matchLabels:
-      app: presentation-server
+      app: demo-grpc-record-server
   template:
     metadata:
       labels:
-        app: presentation-server
+        app: demo-grpc-record-server
         component: server
     spec:
       containers:
-      - name: presentation-server
-        image: presentation-server
+      - name: record-server
+        image: record-server
         resources:
           limits:
             memory: "128Mi"
@@ -24,6 +24,10 @@ spec:
             value: "redis"
           - name: REDIS_PORT
             value: "6379"
+          - name: "USERS_SERVICE_HOST"
+            value: "demo-grpc-users"
+          - name: "USERS_SERVICE_PORT"
+            value: "5000"
         ports:
         - containerPort: 50000
           name: grpc

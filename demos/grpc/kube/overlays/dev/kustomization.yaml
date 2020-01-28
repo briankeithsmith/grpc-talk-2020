@@ -3,3 +3,5 @@ resources:
 
 namespace: dev
 
+patchesStrategicMerge:
+- envoy.ingress.yaml

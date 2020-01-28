@@ -3,21 +3,20 @@ kind: Ingress
 metadata:
   annotations:
     kubernetes.io/ingress.class: "nginx"
-    nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     cert-manager.io/cluster-issuer: "letsencrypt-prod"
-  name: demo-grpc-users
+  name: demo-grpc-envoy
 spec:
   rules:
-  - host: users.grpc.demo.apps.v2tools.com
+  - host: apps.v2tools.com
     http:
       paths:
-      - path: /
+      - path: /presentations/demo/grpc/api
         backend:
           serviceName: demo-grpc-users
-          servicePort: grpc
+          servicePort: data
         
   tls:
   - hosts:
-    - users.grpc.demo.apps.v2tools.com
-    secretName: users-grpc-demo-apps-v2tools-crt
+    - apps.v2tools.com
+    secretName: apps-v2tools-crt

@@ -1,8 +1,9 @@
 commonLabels:
-  app: demo-grpc
+  app: demo-grpc-envoy
 
 
 resources:
+- envoy.ingress.yaml
 - envoy.deployment.yaml
 - envoy.service.yaml
 - envoy.configmap.yaml

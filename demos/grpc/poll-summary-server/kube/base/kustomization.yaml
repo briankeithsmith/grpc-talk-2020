@@ -1,0 +1,7 @@
+commonLabels:
+  app: demo-grpc-poll-summary-server
+
+resources:
+- poll-summary-server.deployment.yaml
+- poll-summary-server.service.yaml
+- poll-summary-server.ingress.yaml
